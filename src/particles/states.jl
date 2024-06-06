@@ -1,3 +1,5 @@
+import QEDbase: base_state
+
 function _booster_fermion(mom::QEDbase.AbstractFourMomentum, mass::Real)
     return (slashed(mom) + mass * one(DiracMatrix)) / (sqrt(abs(getT(mom)) + mass))
 end
@@ -13,7 +15,7 @@ function base_state(
     spin::AbstractDefiniteSpin,
 )
     booster = _booster_fermion(mom, mass(particle))
-    return BiSpinor(booster[:, _spin_index(spin)])
+    return BiSpinor(booster[:, QEDbase._spin_index(spin)])
 end
 
 function base_state(
@@ -30,7 +32,7 @@ function base_state(
     spin::AbstractDefiniteSpin,
 )
     booster = _booster_antifermion(mom, mass(particle))
-    return AdjointBiSpinor(BiSpinor(booster[:, _spin_index(spin) + 2])) * GAMMA[1]
+    return AdjointBiSpinor(BiSpinor(booster[:, QEDbase._spin_index(spin) + 2])) * GAMMA[1]
 end
 
 function base_state(
@@ -50,7 +52,7 @@ function base_state(
     spin::AbstractDefiniteSpin,
 )
     booster = _booster_fermion(mom, mass(particle))
-    return AdjointBiSpinor(BiSpinor(booster[:, _spin_index(spin)])) * GAMMA[1]
+    return AdjointBiSpinor(BiSpinor(booster[:, QEDbase._spin_index(spin)])) * GAMMA[1]
 end
 
 function base_state(
@@ -70,7 +72,7 @@ function base_state(
     spin::AbstractDefiniteSpin,
 )
     booster = _booster_antifermion(mom, mass(particle))
-    return BiSpinor(booster[:, _spin_index(spin) + 2])
+    return BiSpinor(booster[:, QEDbase._spin_index(spin) + 2])
 end
 
 function base_state(
