@@ -20,14 +20,6 @@ const BASE_ANTIPARTICLE_SPINOR = [
     BASE_ANTIPARTICLE_SPINOR_UP, BASE_ANTIPARTICLE_SPINOR_DOWN
 ]
 
-mutable struct SpinorConstructionError <: Exception
-    var::String
-end
-
-function Base.showerror(io::IO, e::SpinorConstructionError)
-    return print(io, "SpinorConstructionError: ", e.var)
-end
-
 @inline function _check_spinor_input(
     mom::T, mass::Float64
 ) where {T<:AbstractLorentzVector{TE}} where {TE<:Real}
@@ -39,8 +31,6 @@ end
         )
     end
 end
-
-abstract type AbstractParticleSpinor end
 
 #
 # fermion spinors
