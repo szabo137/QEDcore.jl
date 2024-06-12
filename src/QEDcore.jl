@@ -33,8 +33,8 @@ using DocStringExtensions
 using StaticArrays
 using SimpleTraits
 
-include("dirac_tensors/types.jl")
-include("dirac_tensors/multiplication.jl")
+include("algebraic_objects/dirac_tensors/types.jl")
+include("algebraic_objects/dirac_tensors/multiplication.jl")
 
 include("phase_spaces/types.jl")
 include("phase_spaces/access.jl")
@@ -42,11 +42,9 @@ include("phase_spaces/create.jl")
 include("phase_spaces/print.jl")
 include("phase_spaces/utility.jl")
 
-include("four_momentum.jl")
-
-include("lorentz_vector.jl")
-
-include("gamma_matrices.jl")
+include("algebraic_objects/four_momentum.jl")
+include("algebraic_objects/lorentz_vector.jl")
+include("algebraic_objects/gamma_matrices.jl")
 
 include("particles/propagators.jl")
 include("particles/states.jl")

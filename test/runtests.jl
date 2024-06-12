@@ -3,31 +3,28 @@ using Test
 using SafeTestsets
 
 begin
-    # interfaces
-    @time @safetestset "process interface" begin
-        include("interfaces/process.jl")
+    @time @safetestset "phase spaces" begin
+        include("phase_spaces.jl")
     end
 
-    @time @safetestset "computation setup interface" begin
-        include("interfaces/setup.jl")
-    end
-
+    # algebraic objects
     @time @safetestset "four momentum" begin
-        include("four_momentum.jl")
+        include("algebraic_objects/four_momentum.jl")
     end
 
     @time @safetestset "gamma matrices" begin
-        include("gamma_matrices.jl")
+        include("algebraic_objects/gamma_matrices.jl")
     end
 
     @time @safetestset "Lorentz vector" begin
-        include("lorentz_vector.jl")
+        include("algebraic_objects/lorentz_vector.jl")
     end
 
     @time @safetestset "Dirac tensors" begin
-        include("dirac_tensor.jl")
+        include("algebraic_objects/dirac_tensor.jl")
     end
 
+    # particles
     @time @safetestset "particle spinors" begin
         include("particles/spinors.jl")
     end
@@ -38,5 +35,14 @@ begin
 
     @time @safetestset "particle propagators" begin
         include("particles/propagators.jl")
+    end
+
+    # interfaces
+    @time @safetestset "process interface" begin
+        include("interfaces/process.jl")
+    end
+
+    @time @safetestset "computation setup interface" begin
+        include("interfaces/setup.jl")
     end
 end
