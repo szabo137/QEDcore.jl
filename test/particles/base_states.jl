@@ -3,7 +3,7 @@ using QEDbase
 using StaticArrays
 using Random
 
-include("utils.jl")
+include("../utils.jl")
 
 FERMION_STATES_GROUNDTRUTH_FACTORY = Dict(
     (Incoming, Electron) => IncomingFermionSpinor,

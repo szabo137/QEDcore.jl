@@ -29,10 +29,14 @@ begin
     end
 
     @time @safetestset "particle spinors" begin
-        include("particle_spinors.jl")
+        include("particles/spinors.jl")
     end
 
-    @time @safetestset "particle spinors" begin
-        include("particle_base_states.jl")
+    @time @safetestset "particle base states" begin
+        include("particles/base_states.jl")
+    end
+
+    @time @safetestset "particle propagators" begin
+        include("particles/propagators.jl")
     end
 end

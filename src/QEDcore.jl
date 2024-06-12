@@ -48,6 +48,7 @@ include("lorentz_vector.jl")
 
 include("gamma_matrices.jl")
 
+include("particles/propagators.jl")
 include("particles/states.jl")
 include("particles/spinors.jl")
 
