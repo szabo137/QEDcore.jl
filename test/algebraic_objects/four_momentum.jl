@@ -1,5 +1,5 @@
 using QEDcore
-using QEDbase
+using QEDbase: QEDbase
 using Random
 
 const ATOL = 1e-15
@@ -14,101 +14,105 @@ const ATOL = 1e-15
     mom_offshell = MomentumType(0.0, 0.0, 0.0, mass)
 
     @testset "magnitude consistence" for mom in [mom_onshell, mom_offshell, mom_zero]
-        @test getMagnitude2(mom) == getMag2(mom)
-        @test getMagnitude(mom) == getMag(mom)
-        @test isapprox(getMagnitude(mom), sqrt(getMagnitude2(mom)))
+        @test QEDbase.getMagnitude2(mom) == QEDbase.getMag2(mom)
+        @test QEDbase.getMagnitude(mom) == QEDbase.getMag(mom)
+        @test isapprox(QEDbase.getMagnitude(mom), sqrt(QEDbase.getMagnitude2(mom)))
     end
 
     @testset "magnitude values" begin
-        @test isapprox(getMagnitude2(mom_onshell), x^2 + y^2 + z^2)
-        @test isapprox(getMagnitude(mom_onshell), sqrt(x^2 + y^2 + z^2))
+        @test isapprox(QEDbase.getMagnitude2(mom_onshell), x^2 + y^2 + z^2)
+        @test isapprox(QEDbase.getMagnitude(mom_onshell), sqrt(x^2 + y^2 + z^2))
     end
 
     @testset "mass consistence" for mom_on in [mom_onshell, mom_zero]
-        @test getInvariantMass2(mom_on) == getMass2(mom_on)
-        @test getInvariantMass(mom_on) == getMass(mom_on)
-        @test isapprox(getInvariantMass(mom_on), sqrt(getInvariantMass2(mom_on)))
+        @test QEDbase.getInvariantMass2(mom_on) == QEDbase.getMass2(mom_on)
+        @test QEDbase.getInvariantMass(mom_on) == QEDbase.getMass(mom_on)
+        @test isapprox(
+            QEDbase.getInvariantMass(mom_on), sqrt(QEDbase.getInvariantMass2(mom_on))
+        )
     end
 
     @testset "mass value" begin
-        @test isapprox(getInvariantMass2(mom_onshell), E^2 - (x^2 + y^2 + z^2))
-        @test isapprox(getInvariantMass(mom_onshell), sqrt(E^2 - (x^2 + y^2 + z^2)))
+        @test isapprox(QEDbase.getInvariantMass2(mom_onshell), E^2 - (x^2 + y^2 + z^2))
+        @test isapprox(QEDbase.getInvariantMass(mom_onshell), sqrt(E^2 - (x^2 + y^2 + z^2)))
 
-        @test isapprox(getInvariantMass(mom_onshell), mass)
-        @test isapprox(getInvariantMass(mom_offshell), -mass)
-        @test isapprox(getInvariantMass(mom_zero), 0.0)
+        @test isapprox(QEDbase.getInvariantMass(mom_onshell), mass)
+        @test isapprox(QEDbase.getInvariantMass(mom_offshell), -mass)
+        @test isapprox(QEDbase.getInvariantMass(mom_zero), 0.0)
     end
 
     @testset "momentum components" begin
-        @test getE(mom_onshell) == E
-        @test getEnergy(mom_onshell) == getE(mom_onshell)
-        @test getPx(mom_onshell) == x
-        @test getPy(mom_onshell) == y
-        @test getPz(mom_onshell) == z
+        @test QEDbase.getE(mom_onshell) == E
+        @test QEDbase.getEnergy(mom_onshell) == QEDbase.getE(mom_onshell)
+        @test QEDbase.getPx(mom_onshell) == x
+        @test QEDbase.getPy(mom_onshell) == y
+        @test QEDbase.getPz(mom_onshell) == z
 
-        @test isapprox(getBeta(mom_onshell), sqrt(x^2 + y^2 + z^2) / E)
-        @test isapprox(getGamma(mom_onshell), 1 / sqrt(1.0 - getBeta(mom_onshell)^2))
+        @test isapprox(QEDbase.getBeta(mom_onshell), sqrt(x^2 + y^2 + z^2) / E)
+        @test isapprox(
+            QEDbase.getGamma(mom_onshell), 1 / sqrt(1.0 - QEDbase.getBeta(mom_onshell)^2)
+        )
 
-        @test getE(mom_zero) == 0.0
-        @test getEnergy(mom_zero) == 0.0
-        @test getPx(mom_zero) == 0.0
-        @test getPy(mom_zero) == 0.0
-        @test getPz(mom_zero) == 0.0
+        @test QEDbase.getE(mom_zero) == 0.0
+        @test QEDbase.getEnergy(mom_zero) == 0.0
+        @test QEDbase.getPx(mom_zero) == 0.0
+        @test QEDbase.getPy(mom_zero) == 0.0
+        @test QEDbase.getPz(mom_zero) == 0.0
 
-        @test isapprox(getBeta(mom_zero), 0.0)
-        @test isapprox(getGamma(mom_zero), 1.0)
+        @test isapprox(QEDbase.getBeta(mom_zero), 0.0)
+        @test isapprox(QEDbase.getGamma(mom_zero), 1.0)
     end
 
     @testset "transverse coordinates" for mom_on in [mom_onshell, mom_zero]
-        @test getTransverseMomentum2(mom_on) == getPt2(mom_on)
-        @test getTransverseMomentum2(mom_on) == getPerp2(mom_on)
-        @test getTransverseMomentum(mom_on) == getPt(mom_on)
-        @test getTransverseMomentum(mom_on) == getPerp(mom_on)
+        @test QEDbase.getTransverseMomentum2(mom_on) == QEDbase.getPt2(mom_on)
+        @test QEDbase.getTransverseMomentum2(mom_on) == QEDbase.getPerp2(mom_on)
+        @test QEDbase.getTransverseMomentum(mom_on) == QEDbase.getPt(mom_on)
+        @test QEDbase.getTransverseMomentum(mom_on) == QEDbase.getPerp(mom_on)
 
-        @test isapprox(getPt(mom_on), sqrt(getPt2(mom_on)))
+        @test isapprox(QEDbase.getPt(mom_on), sqrt(QEDbase.getPt2(mom_on)))
 
-        @test getTransverseMass2(mom_on) == getMt2(mom_on)
-        @test getTransverseMass(mom_on) == getMt(mom_on)
+        @test QEDbase.getTransverseMass2(mom_on) == QEDbase.getMt2(mom_on)
+        @test QEDbase.getTransverseMass(mom_on) == QEDbase.getMt(mom_on)
     end
 
     @testset "transverse coordiantes value" begin
-        @test isapprox(getTransverseMomentum2(mom_onshell), x^2 + y^2)
-        @test isapprox(getTransverseMomentum(mom_onshell), sqrt(x^2 + y^2))
-        @test isapprox(getTransverseMass2(mom_onshell), E^2 - z^2)
-        @test isapprox(getTransverseMass(mom_onshell), sqrt(E^2 - z^2))
-        @test isapprox(getMt(mom_offshell), -mass)
-        @test isapprox(getRapidity(mom_onshell), 0.5 * log((E + z) / (E - z)))
+        @test isapprox(QEDbase.getTransverseMomentum2(mom_onshell), x^2 + y^2)
+        @test isapprox(QEDbase.getTransverseMomentum(mom_onshell), sqrt(x^2 + y^2))
+        @test isapprox(QEDbase.getTransverseMass2(mom_onshell), E^2 - z^2)
+        @test isapprox(QEDbase.getTransverseMass(mom_onshell), sqrt(E^2 - z^2))
+        @test isapprox(QEDbase.getMt(mom_offshell), -mass)
+        @test isapprox(QEDbase.getRapidity(mom_onshell), 0.5 * log((E + z) / (E - z)))
 
-        @test isapprox(getTransverseMomentum2(mom_zero), 0.0)
-        @test isapprox(getTransverseMomentum(mom_zero), 0.0)
-        @test isapprox(getTransverseMass2(mom_zero), 0.0)
-        @test isapprox(getTransverseMass(mom_zero), 0.0)
-        @test isapprox(getMt(mom_zero), 0.0)
+        @test isapprox(QEDbase.getTransverseMomentum2(mom_zero), 0.0)
+        @test isapprox(QEDbase.getTransverseMomentum(mom_zero), 0.0)
+        @test isapprox(QEDbase.getTransverseMass2(mom_zero), 0.0)
+        @test isapprox(QEDbase.getTransverseMass(mom_zero), 0.0)
+        @test isapprox(QEDbase.getMt(mom_zero), 0.0)
     end
 
     @testset "spherical coordiantes consistence" for mom_on in [mom_onshell, mom_zero]
-        @test getRho2(mom_on) == getMagnitude2(mom_on)
-        @test getRho(mom_on) == getMagnitude(mom_on)
+        @test QEDbase.getRho2(mom_on) == QEDbase.getMagnitude2(mom_on)
+        @test QEDbase.getRho(mom_on) == QEDbase.getMagnitude(mom_on)
 
-        @test isapprox(getCosTheta(mom_on), cos(getTheta(mom_on)))
-        @test isapprox(getCosPhi(mom_on), cos(getPhi(mom_on)))
-        @test isapprox(getSinPhi(mom_on), sin(getPhi(mom_on)))
+        @test isapprox(QEDbase.getCosTheta(mom_on), cos(QEDbase.getTheta(mom_on)))
+        @test isapprox(QEDbase.getCosPhi(mom_on), cos(QEDbase.getPhi(mom_on)))
+        @test isapprox(QEDbase.getSinPhi(mom_on), sin(QEDbase.getPhi(mom_on)))
     end
 
     @testset "spherical coordiantes values" begin
-        @test isapprox(getTheta(mom_onshell), atan(getPt(mom_onshell), z))
-        @test isapprox(getTheta(mom_zero), 0.0)
+        @test isapprox(QEDbase.getTheta(mom_onshell), atan(QEDbase.getPt(mom_onshell), z))
+        @test isapprox(QEDbase.getTheta(mom_zero), 0.0)
 
-        @test isapprox(getPhi(mom_onshell), atan(y, x))
-        @test isapprox(getPhi(mom_zero), 0.0)
+        @test isapprox(QEDbase.getPhi(mom_onshell), atan(y, x))
+        @test isapprox(QEDbase.getPhi(mom_zero), 0.0)
     end
 
     @testset "light-cone coordiantes" begin
-        @test isapprox(getPlus(mom_onshell), 0.5 * (E + z))
-        @test isapprox(getMinus(mom_onshell), 0.5 * (E - z))
+        @test isapprox(QEDbase.getPlus(mom_onshell), 0.5 * (E + z))
+        @test isapprox(QEDbase.getMinus(mom_onshell), 0.5 * (E - z))
 
-        @test isapprox(getPlus(mom_zero), 0.0)
-        @test isapprox(getMinus(mom_zero), 0.0)
+        @test isapprox(QEDbase.getPlus(mom_zero), 0.0)
+        @test isapprox(QEDbase.getMinus(mom_zero), 0.0)
     end
 end # FourMomentum getter
 
@@ -125,41 +129,47 @@ end
     rng = MersenneTwister(123456)
 
     @testset "Momentum components" begin
-        @test test_get_set(rng, setE!, getE)
-        @test test_get_set(rng, setEnergy!, getE)
-        @test test_get_set(rng, setPx!, getPx)
-        @test test_get_set(rng, setPy!, getPy)
-        @test test_get_set(rng, setPz!, getPz)
+        @test test_get_set(rng, QEDbase.setE!, QEDbase.getE)
+        @test test_get_set(rng, QEDbase.setEnergy!, QEDbase.getE)
+        @test test_get_set(rng, QEDbase.setPx!, QEDbase.getPx)
+        @test test_get_set(rng, QEDbase.setPy!, QEDbase.getPy)
+        @test test_get_set(rng, QEDbase.setPz!, QEDbase.getPz)
     end
 
     @testset "spherical coordiantes" begin
-        @test test_get_set(rng, setTheta!, getTheta)
-        @test test_get_set(rng, setTheta!, getTheta, value=0.0)
-        @test test_get_set(rng, setCosTheta!, getCosTheta)
-        @test test_get_set(rng, setCosTheta!, getCosTheta, value=1.0)
-        @test test_get_set(rng, setPhi!, getPhi)
-        @test test_get_set(rng, setPhi!, getPhi, value=0.0)
-        @test test_get_set(rng, setRho!, getRho)
-        @test test_get_set(rng, setRho!, getRho, value=0.0)
+        @test test_get_set(rng, QEDbase.setTheta!, QEDbase.getTheta)
+        @test test_get_set(rng, QEDbase.setTheta!, QEDbase.getTheta, value=0.0)
+        @test test_get_set(rng, QEDbase.setCosTheta!, QEDbase.getCosTheta)
+        @test test_get_set(rng, QEDbase.setCosTheta!, QEDbase.getCosTheta, value=1.0)
+        @test test_get_set(rng, QEDbase.setPhi!, QEDbase.getPhi)
+        @test test_get_set(rng, QEDbase.setPhi!, QEDbase.getPhi, value=0.0)
+        @test test_get_set(rng, QEDbase.setRho!, QEDbase.getRho)
+        @test test_get_set(rng, QEDbase.setRho!, QEDbase.getRho, value=0.0)
     end
 
     @testset "light-cone coordiantes" begin
-        @test test_get_set(rng, setPlus!, getPlus)
-        @test test_get_set(rng, setPlus!, getPlus, value=0.0)
-        @test test_get_set(rng, setMinus!, getMinus)
-        @test test_get_set(rng, setMinus!, getMinus, value=0.0)
+        @test test_get_set(rng, QEDbase.setPlus!, QEDbase.getPlus)
+        @test test_get_set(rng, QEDbase.setPlus!, QEDbase.getPlus, value=0.0)
+        @test test_get_set(rng, QEDbase.setMinus!, QEDbase.getMinus)
+        @test test_get_set(rng, QEDbase.setMinus!, QEDbase.getMinus, value=0.0)
     end
 
     @testset "transverse coordinates" begin
-        @test test_get_set(rng, setTransverseMomentum!, getTransverseMomentum)
-        @test test_get_set(rng, setTransverseMomentum!, getTransverseMomentum, value=0.0)
-        @test test_get_set(rng, setPerp!, getTransverseMomentum)
-        @test test_get_set(rng, setPt!, getTransverseMomentum)
-        @test test_get_set(rng, setTransverseMass!, getTransverseMass)
-        @test test_get_set(rng, setTransverseMass!, getTransverseMass, value=0.0)
-        @test test_get_set(rng, setMt!, getTransverseMass)
-        @test test_get_set(rng, setRapidity!, getRapidity)
-        @test test_get_set(rng, setRapidity!, getRapidity, value=0.0)
+        @test test_get_set(
+            rng, QEDbase.setTransverseMomentum!, QEDbase.getTransverseMomentum
+        )
+        @test test_get_set(
+            rng, QEDbase.setTransverseMomentum!, QEDbase.getTransverseMomentum, value=0.0
+        )
+        @test test_get_set(rng, QEDbase.setPerp!, QEDbase.getTransverseMomentum)
+        @test test_get_set(rng, QEDbase.setPt!, QEDbase.getTransverseMomentum)
+        @test test_get_set(rng, QEDbase.setTransverseMass!, QEDbase.getTransverseMass)
+        @test test_get_set(
+            rng, QEDbase.setTransverseMass!, QEDbase.getTransverseMass, value=0.0
+        )
+        @test test_get_set(rng, QEDbase.setMt!, QEDbase.getTransverseMass)
+        @test test_get_set(rng, QEDbase.setRapidity!, QEDbase.getRapidity)
+        @test test_get_set(rng, QEDbase.setRapidity!, QEDbase.getRapidity, value=0.0)
     end
 end # FourMomentum setter
 
@@ -182,11 +192,11 @@ const M_RELERR = 0.0001
             E_massive = sqrt(x^2 + y^2 + z^2 + M_MASSIVE^2)
             mom_massless = SFourMomentum(E_massless, x, y, z)
             mom_massive = SFourMomentum(E_massive, x, y, z)
-            @test isonshell(mom_massless, M_MASSLESS)
-            @test isonshell(mom_massive, M_MASSIVE)
+            @test QEDbase.isonshell(mom_massless, M_MASSLESS)
+            @test QEDbase.isonshell(mom_massive, M_MASSIVE)
 
-            @test assert_onshell(mom_massless, M_MASSLESS) == nothing
-            @test assert_onshell(mom_massive, M_MASSIVE) == nothing
+            @test QEDbase.assert_onshell(mom_massless, M_MASSLESS) == nothing
+            @test QEDbase.assert_onshell(mom_massive, M_MASSIVE) == nothing
         end
     end
 
@@ -202,11 +212,13 @@ const M_RELERR = 0.0001
             mom_massless = SFourMomentum(E_massless, x, y, z)
             mom_massive = SFourMomentum(E_massive, x, y, z)
 
-            @test !isonshell(mom_massless, M_MASSLESS)
-            @test !isonshell(mom_massive, M_MASSIVE)
+            @test !QEDbase.isonshell(mom_massless, M_MASSLESS)
+            @test !QEDbase.isonshell(mom_massive, M_MASSIVE)
 
-            @test_throws QEDbase.OnshellError assert_onshell(mom_massless, M_MASSLESS)
-            @test_throws QEDbase.OnshellError assert_onshell(mom_massive, M_MASSIVE)
+            @test_throws QEDbase.OnshellError QEDbase.assert_onshell(
+                mom_massless, M_MASSLESS
+            )
+            @test_throws QEDbase.OnshellError QEDbase.assert_onshell(mom_massive, M_MASSIVE)
         end
     end
 end

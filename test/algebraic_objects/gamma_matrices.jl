@@ -1,5 +1,5 @@
 using QEDcore
-using QEDbase
+using QEDbase: QEDbase
 using LinearAlgebra
 using Random
 using SparseArrays

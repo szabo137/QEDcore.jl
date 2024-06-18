@@ -1,5 +1,5 @@
 using Random
-using QEDbase
+using QEDbase: QEDbase
 using QEDcore
 
 RNG = MersenneTwister(137137)
@@ -32,8 +32,8 @@ include("../test_implementation/TestImplementation.jl")
         TESTPSDEF_FAIL = TestImplementation.TestPhasespaceDef_FAIL()
 
         @testset "failed process interface" begin
-            @test_throws MethodError incoming_particles(TESTPROC_FAIL_ALL)
-            @test_throws MethodError outgoing_particles(TESTPROC_FAIL_ALL)
+            @test_throws MethodError QEDbase.incoming_particles(TESTPROC_FAIL_ALL)
+            @test_throws MethodError QEDbase.outgoing_particles(TESTPROC_FAIL_ALL)
         end
 
         @testset "$PROC $MODEL" for (PROC, MODEL) in Iterators.product(
@@ -56,18 +56,18 @@ include("../test_implementation/TestImplementation.jl")
     end
 
     @testset "broadcast" begin
-        test_func(proc::AbstractProcessDefinition) = proc
+        test_func(proc::QEDbase.AbstractProcessDefinition) = proc
         @test test_func.(TESTPROC) == TESTPROC
 
-        test_func(model::AbstractModelDefinition) = model
+        test_func(model::QEDbase.AbstractModelDefinition) = model
         @test test_func.(TESTMODEL) == TESTMODEL
     end
 
     @testset "incoming/outgoing particles" begin
-        @test incoming_particles(TESTPROC) == INCOMING_PARTICLES
-        @test outgoing_particles(TESTPROC) == OUTGOING_PARTICLES
-        @test number_incoming_particles(TESTPROC) == N_INCOMING
-        @test number_outgoing_particles(TESTPROC) == N_OUTGOING
+        @test QEDbase.incoming_particles(TESTPROC) == INCOMING_PARTICLES
+        @test QEDbase.outgoing_particles(TESTPROC) == OUTGOING_PARTICLES
+        @test QEDbase.number_incoming_particles(TESTPROC) == N_INCOMING
+        @test QEDbase.number_outgoing_particles(TESTPROC) == N_OUTGOING
     end
 
     @testset "incident flux" begin

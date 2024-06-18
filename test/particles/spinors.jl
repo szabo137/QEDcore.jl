@@ -1,4 +1,4 @@
-using QEDbase
+using QEDbase: QEDbase
 using QEDcore
 using Random
 

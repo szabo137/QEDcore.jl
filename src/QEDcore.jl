@@ -28,7 +28,7 @@ export PhasespaceDefinition
 export ParticleStateful, PhaseSpacePoint, InPhaseSpacePoint, OutPhaseSpacePoint
 export spin, polarization, particle_direction, particle_species, momentum, momenta, getindex
 
-using QEDbase
+using QEDbase: QEDbase
 using DocStringExtensions
 using StaticArrays
 using SimpleTraits

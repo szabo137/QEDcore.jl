@@ -14,7 +14,7 @@ Builds a static LorentzVectorLike with real components used to statically model 
 # Fields
 $(TYPEDFIELDS)
 """
-struct SFourMomentum <: AbstractFourMomentum
+struct SFourMomentum <: QEDbase.AbstractFourMomentum
     "energy component"
     E::Float64
 
@@ -68,7 +68,7 @@ Builds a mutable LorentzVector with real components used to statically model the
 # Fields
 $(TYPEDFIELDS)
 """
-mutable struct MFourMomentum <: AbstractFourMomentum
+mutable struct MFourMomentum <: QEDbase.AbstractFourMomentum
     "energy component"
     E::Float64
 

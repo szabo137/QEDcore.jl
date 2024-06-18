@@ -1,5 +1,5 @@
 using QEDcore
-using QEDbase
+using QEDbase: QEDbase
 using StaticArrays
 
 unary_methods = [-, +]

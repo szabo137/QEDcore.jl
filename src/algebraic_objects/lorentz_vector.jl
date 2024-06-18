@@ -19,7 +19,7 @@ Concrete implementation of a generic static Lorentz vector. Each manipulation of
 # Fields
 $(TYPEDFIELDS)
 """
-struct SLorentzVector{T} <: AbstractLorentzVector{T}
+struct SLorentzVector{T} <: QEDbase.AbstractLorentzVector{T}
     "`t` component"
     t::T
 
@@ -55,7 +55,7 @@ Concrete implementation of a generic mutable Lorentz vector. Each manipulation o
 # Fields
 $(TYPEDFIELDS)
 """
-mutable struct MLorentzVector{T} <: AbstractLorentzVector{T}
+mutable struct MLorentzVector{T} <: QEDbase.AbstractLorentzVector{T}
     "`t` component"
     t::T
 

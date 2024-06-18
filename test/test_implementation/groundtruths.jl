@@ -35,7 +35,9 @@ end
 Test implementation of the averaging norm. Returns the inverse of the sum of all external particles of the passed process.
 """
 function _groundtruth_averaging_norm(proc)
-    return 1.0 / (number_incoming_particles(proc) + number_outgoing_particles(proc))
+    return 1.0 / (
+        QEDbase.number_incoming_particles(proc) + QEDbase.number_outgoing_particles(proc)
+    )
 end
 
 """
@@ -59,8 +61,8 @@ end
 Test implementation of the phase space factor. Return the inverse of the product of the energies of all external particles.
 """
 function _groundtruth_phase_space_factor(in_ps, out_ps)
-    en_in = getE.(in_ps)
-    en_out = getE.(out_ps)
+    en_in = QEDbase.getE.(in_ps)
+    en_out = QEDbase.getE.(out_ps)
     return 1 / (prod(en_in) * prod(en_out))
 end
 
@@ -240,26 +242,26 @@ Test implementation of the total cross section. Return the Minkowski square of t
 """
 function _groundtruth_total_probability(
     in_ps::NTuple{N,T}
-) where {N,T<:AbstractFourMomentum}
+) where {N,T<:QEDbase.AbstractFourMomentum}
     Ptot = sum(in_ps)
     return Ptot * Ptot
 end
 
 function _groundtruth_total_probability(
     in_pss::Vector{NTuple{N,T}}
-) where {N,T<:AbstractFourMomentum}
+) where {N,T<:QEDbase.AbstractFourMomentum}
     return _groundtruth_total_probability.(in_pss)
 end
 
 function _groundtruth_total_cross_section(
     in_ps::NTuple{N,T}
-) where {N,T<:AbstractFourMomentum}
+) where {N,T<:QEDbase.AbstractFourMomentum}
     init_flux = _groundtruth_incident_flux(in_ps)
     return _groundtruth_total_probability(in_ps) / (4 * init_flux)
 end
 
 function _groundtruth_total_cross_section(
     in_pss::Vector{NTuple{N,T}}
-) where {N,T<:AbstractFourMomentum}
+) where {N,T<:QEDbase.AbstractFourMomentum}
     return _groundtruth_total_cross_section.(in_psps)
 end

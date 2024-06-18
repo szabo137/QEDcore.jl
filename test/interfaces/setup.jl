@@ -1,6 +1,6 @@
 using Random
 using Suppressor
-using QEDbase
+using QEDbase: QEDbase
 using QEDcore
 
 RNG = MersenneTwister(137137)
@@ -18,7 +18,7 @@ _transform_to_invalid(x) = -abs(x)
 _groundtruth_post_processing(x, y) = x + y
 
 # setups for which the interface is implemented
-abstract type AbstractTestSetup <: AbstractComputationSetup end
+abstract type AbstractTestSetup <: QEDbase.AbstractComputationSetup end
 QEDbase._compute(stp::AbstractTestSetup, x) = _groundtruth_compute(x)
 
 # setup with default implementations
@@ -44,17 +44,17 @@ end
 QEDbase._post_processing(::TestSetupCustom, x, y) = _groundtruth_post_processing(x, y)
 
 # setup which fail on computation with default implementations
-struct TestSetupFAIL <: AbstractComputationSetup end
+struct TestSetupFAIL <: QEDbase.AbstractComputationSetup end
 
 # setup which fail on computation with custom input validation, where the
 # invalid input will be caught before the computation.
-struct TestSetupCustomValidationFAIL <: AbstractComputationSetup end
+struct TestSetupCustomValidationFAIL <: QEDbase.AbstractComputationSetup end
 function QEDbase._assert_valid_input(stp::TestSetupCustomValidationFAIL, x)
     return _groundtruth_valid_input_assert(x)
 end
 
 # setup which fail on computation with custom post processing
-struct TestSetupCustomPostProcessingFAIL <: AbstractComputationSetup end
+struct TestSetupCustomPostProcessingFAIL <: QEDbase.AbstractComputationSetup end
 function QEDbase._post_processing(::TestSetupCustomPostProcessingFAIL, x, y)
     return _groundtruth_post_processing(x, y)
 end
@@ -63,21 +63,23 @@ end
         rnd_input = rand(RNG)
 
         @test_throws MethodError QEDbase._compute(TestSetupFAIL(), rnd_input)
-        @test_throws MethodError compute(TestSetupFAIL(), rnd_input)
+        @test_throws MethodError QEDbase.compute(TestSetupFAIL(), rnd_input)
 
         @test_throws MethodError QEDbase._compute(
             TestSetupCustomValidationFAIL(), rnd_input
         )
-        @test_throws MethodError compute(TestSetupCustomValidationFAIL(), rnd_input)
+        @test_throws MethodError QEDbase.compute(TestSetupCustomValidationFAIL(), rnd_input)
         # invalid input should be caught without throwing a MethodError
-        @test_throws TestException compute(
+        @test_throws TestException QEDbase.compute(
             TestSetupCustomValidationFAIL(), _transform_to_invalid(rnd_input)
         )
 
         @test_throws MethodError QEDbase._compute(
             TestSetupCustomPostProcessingFAIL(), rnd_input
         )
-        @test_throws MethodError compute(TestSetupCustomPostProcessingFAIL(), rnd_input)
+        @test_throws MethodError QEDbase.compute(
+            TestSetupCustomPostProcessingFAIL(), rnd_input
+        )
     end
 
     @testset "default interface" begin
@@ -93,7 +95,10 @@ end
             rtol=RTOL,
         )
         @test isapprox(
-            compute(stp, rnd_input), _groundtruth_compute(rnd_input), atol=ATOL, rtol=RTOL
+            QEDbase.compute(stp, rnd_input),
+            _groundtruth_compute(rnd_input),
+            atol=ATOL,
+            rtol=RTOL,
         )
     end
 
@@ -104,7 +109,7 @@ end
         @test_throws TestException QEDbase._assert_valid_input(
             stp, _transform_to_invalid(rnd_input)
         )
-        @test_throws TestException compute(stp, _transform_to_invalid(rnd_input))
+        @test_throws TestException QEDbase.compute(stp, _transform_to_invalid(rnd_input))
     end
 
     @testset "custom post processing" begin
@@ -116,7 +121,7 @@ end
             _groundtruth_post_processing(rnd_input, rnd_output),
         )
         @test isapprox(
-            compute(stp, rnd_input),
+            QEDbase.compute(stp, rnd_input),
             _groundtruth_post_processing(rnd_input, _groundtruth_compute(rnd_input)),
         )
     end
@@ -126,40 +131,40 @@ end
         rnd_input = rand(RNG)
         rnd_output = rand(RNG)
 
-        @test_throws TestException() compute(stp, _transform_to_invalid(rnd_input))
+        @test_throws TestException() QEDbase.compute(stp, _transform_to_invalid(rnd_input))
         @test isapprox(
             QEDbase._post_processing(stp, rnd_input, rnd_output),
             _groundtruth_post_processing(rnd_input, rnd_output),
         )
         @test isapprox(
-            compute(stp, rnd_input),
+            QEDbase.compute(stp, rnd_input),
             _groundtruth_post_processing(rnd_input, _groundtruth_compute(rnd_input)),
         )
     end
 end
 # process setup 
 
-struct TestParticle1 <: AbstractParticle end
-struct TestParticle2 <: AbstractParticle end
-struct TestParticle3 <: AbstractParticle end
-struct TestParticle4 <: AbstractParticle end
+struct TestParticle1 <: QEDbase.AbstractParticle end
+struct TestParticle2 <: QEDbase.AbstractParticle end
+struct TestParticle3 <: QEDbase.AbstractParticle end
+struct TestParticle4 <: QEDbase.AbstractParticle end
 
 PARTICLE_SET = [TestParticle1(), TestParticle2(), TestParticle3(), TestParticle4()]
 
-struct TestProcess <: AbstractProcessDefinition end
-struct TestModel <: AbstractModelDefinition end
+struct TestProcess <: QEDbase.AbstractProcessDefinition end
+struct TestModel <: QEDbase.AbstractModelDefinition end
 
-struct TestProcessSetup <: AbstractProcessSetup end
-QEDbase.scattering_process(::TestProcessSetup) = TestProcess()
-QEDbase.physical_model(::TestProcessSetup) = TestModel()
+struct TestProcessSetup <: QEDbase.AbstractProcessSetup end
+QEDbase.QEDbase.scattering_process(::TestProcessSetup) = TestProcess()
+QEDbase.QEDbase.physical_model(::TestProcessSetup) = TestModel()
 
-struct TestProcessSetupFAIL <: AbstractProcessSetup end
+struct TestProcessSetupFAIL <: QEDbase.AbstractProcessSetup end
 
 @testset "process setup interface" begin
     @testset "interface fail" begin
         rnd_input = rand(RNG)
-        @test_throws MethodError scattering_process(TestProcessSetupFAIL())
-        @test_throws MethodError physical_model(TestProcessSetupFAIL())
+        @test_throws MethodError QEDbase.scattering_process(TestProcessSetupFAIL())
+        @test_throws MethodError QEDbase.physical_model(TestProcessSetupFAIL())
         @test_throws MethodError QEDbase._compute(TestProcessSetupFAIL(), rnd_input)
     end
 
@@ -167,8 +172,8 @@ struct TestProcessSetupFAIL <: AbstractProcessSetup end
         stp = TestProcessSetup()
 
         @test QEDbase._is_computation_setup(stp)
-        @test scattering_process(stp) == TestProcess()
-        @test physical_model(stp) == TestModel()
+        @test QEDbase.scattering_process(stp) == TestProcess()
+        @test QEDbase.physical_model(stp) == TestModel()
     end
 
     @testset "($N_INCOMING,$N_OUTGOING)" for (N_INCOMING, N_OUTGOING) in Iterators.product(
@@ -177,13 +182,13 @@ struct TestProcessSetupFAIL <: AbstractProcessSetup end
         INCOMING_PARTICLES = rand(RNG, PARTICLE_SET, N_INCOMING)
         OUTGOING_PARTICLES = rand(RNG, PARTICLE_SET, N_OUTGOING)
 
-        @suppress QEDbase.incoming_particles(::TestProcess) = INCOMING_PARTICLES
-        @suppress QEDbase.outgoing_particles(::TestProcess) = OUTGOING_PARTICLES
+        @suppress QEDbase.QEDbase.incoming_particles(::TestProcess) = INCOMING_PARTICLES
+        @suppress QEDbase.QEDbase.outgoing_particles(::TestProcess) = OUTGOING_PARTICLES
 
         @testset "delegated functions" begin
             stp = TestProcessSetup()
-            @test number_incoming_particles(stp) == N_INCOMING
-            @test number_outgoing_particles(stp) == N_OUTGOING
+            @test QEDbase.number_incoming_particles(stp) == N_INCOMING
+            @test QEDbase.number_outgoing_particles(stp) == N_OUTGOING
         end
     end
 end

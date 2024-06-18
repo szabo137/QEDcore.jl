@@ -1,5 +1,5 @@
 using QEDcore
-using QEDbase
+using QEDbase: QEDbase
 using StaticArrays
 
 unary_methods = [-, +]
@@ -27,10 +27,10 @@ unary_methods = [-, +]
             "No precise constructor for $(LorentzVectorType) found. Length of input was 2."
         ) LorentzVectorType(1, 2)
 
-        @test LV.t == LV[1] == getT(LV)
-        @test LV.x == LV[2] == getX(LV)
-        @test LV.y == LV[3] == getY(LV)
-        @test LV.z == LV[4] == getZ(LV)
+        @test LV.t == LV[1] == QEDbase.getT(LV)
+        @test LV.x == LV[2] == QEDbase.getX(LV)
+        @test LV.y == LV[3] == QEDbase.getY(LV)
+        @test LV.z == LV[4] == QEDbase.getZ(LV)
     end # General Properties
 
     @testset "Arithmetics" begin
@@ -82,7 +82,7 @@ unary_methods = [-, +]
     @testset "utility functions" begin
         LV = LorentzVectorType(4, 3, 2, 1)
 
-        @test isapprox(@inferred(getMagnitude(LV)), sqrt(14))
+        @test isapprox(@inferred(QEDbase.getMagnitude(LV)), sqrt(14))
     end # utility functions
 end # LorentzVectorType
 
