@@ -2,6 +2,10 @@ using QEDbase
 using StaticArrays
 using Random
 
+# TODO this can be deleted when QEDbase is released again
+# fix for the broadcast tests
+Base.broadcastable(part::QEDbase.AbstractParticleType) = Ref(part)
+
 # test function to test scalar broadcasting
 test_broadcast(x::AbstractParticle) = x
 test_broadcast(x::ParticleDirection) = x
