@@ -2,6 +2,7 @@ module QEDcore
 
 import Base: *
 import StaticArrays: similar_type
+import QEDbase: base_state
 
 # lorentz vectors
 export SLorentzVector, MLorentzVector
@@ -28,6 +29,9 @@ export IncomingFermionSpinor,
 export SpinorU, SpinorUbar, SpinorV, SpinorVbar
 export @valid_spinor_input
 
+# particle base states
+export base_state
+
 using QEDbase: QEDbase
 using DocStringExtensions
 using StaticArrays
@@ -42,5 +46,6 @@ include("algebraic_objects/gamma_matrices.jl")
 
 include("particles/particle_types.jl")
 include("particles/spinors.jl")
+include("particles/states.jl")
 
 end
