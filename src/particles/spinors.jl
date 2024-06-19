@@ -118,6 +118,6 @@ end
 
 const SpinorVbar = IncomingAntiFermionSpinor
 
-# function getindex(SP::T, idx) where {T<:QEDbase.AbstractParticleSpinor}
-#     return idx in (1, 2) ? SP(idx) : throw(BoundsError())
-# end
+function getindex(SP::T, idx) where {T<:QEDbase.AbstractParticleSpinor}
+    return idx in (1, 2) ? SP(idx) : throw(BoundsError())
+end

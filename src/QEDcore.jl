@@ -15,6 +15,12 @@ export BiSpinor, AdjointBiSpinor, DiracMatrix
 # gamma matrices
 export gamma, GAMMA, DiracGammaRepresentation, slashed
 
+# particle types
+export AbstractParticleSpinor
+export FermionLike, Fermion, AntiFermion, MajoranaFermion
+export BosonLike, Boson, AntiBoson, MajoranaBoson
+export Electron, Positron, Photon
+
 # particle spinors
 export BASE_PARTICLE_SPINOR, BASE_ANTIPARTICLE_SPINOR
 export IncomingFermionSpinor,
@@ -35,5 +41,6 @@ include("algebraic_objects/lorentz_vector.jl")
 include("algebraic_objects/gamma_matrices.jl")
 
 include("particles/spinors.jl")
+include("particles/particle_types.jl")
 
 end

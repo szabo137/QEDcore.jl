@@ -21,6 +21,10 @@ begin
     end
 
     # particles
+    @time @safetestset "particle types" begin
+        include("particles/types.jl")
+    end
+
     @time @safetestset "particle spinors" begin
         include("particles/spinors.jl")
     end
