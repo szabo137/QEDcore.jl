@@ -40,7 +40,7 @@ include("algebraic_objects/four_momentum.jl")
 include("algebraic_objects/lorentz_vector.jl")
 include("algebraic_objects/gamma_matrices.jl")
 
-include("particles/spinors.jl")
 include("particles/particle_types.jl")
+include("particles/spinors.jl")
 
 end

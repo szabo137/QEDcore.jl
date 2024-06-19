@@ -6,10 +6,10 @@ using Random
 include("../utils.jl")
 
 FERMION_STATES_GROUNDTRUTH_FACTORY = Dict(
-    (QEDbase.Incoming, QEDbase.Electron) => IncomingFermionSpinor,
-    (QEDbase.Outgoing, QEDbase.Electron) => OutgoingFermionSpinor,
-    (QEDbase.Incoming, QEDbase.Positron) => IncomingAntiFermionSpinor,
-    (QEDbase.Outgoing, QEDbase.Positron) => OutgoingAntiFermionSpinor,
+    (QEDbase.Incoming, Electron) => IncomingFermionSpinor,
+    (QEDbase.Outgoing, Electron) => OutgoingFermionSpinor,
+    (QEDbase.Incoming, Positron) => IncomingAntiFermionSpinor,
+    (QEDbase.Outgoing, Positron) => OutgoingAntiFermionSpinor,
 )
 
 RNG = MersenneTwister(708583836976)
@@ -39,14 +39,14 @@ test_broadcast(x::QEDbase.ParticleDirection) = x
 test_broadcast(x::QEDbase.AbstractSpinOrPolarization) = x
 
 @testset "fermion" begin
-    struct TestFermion <: QEDbase.Fermion end
+    struct TestFermion <: Fermion end
     @test QEDbase.is_fermion(TestFermion())
     @test QEDbase.is_particle(TestFermion())
     @test !QEDbase.is_anti_particle(TestFermion())
     @test test_broadcast.(TestFermion()) == TestFermion()
 
     @testset "$p $d" for (p, d) in Iterators.product(
-        (QEDbase.Electron, QEDbase.Positron), (QEDbase.Incoming, QEDbase.Outgoing)
+        (Electron, Positron), (QEDbase.Incoming, QEDbase.Outgoing)
     )
         mom = SFourMomentum(sqrt(QEDbase.mass(p()) + X^2 + Y^2 + Z^2), X, Y, Z)
         particle_mass = QEDbase.mass(p())
@@ -73,13 +73,13 @@ test_broadcast(x::QEDbase.AbstractSpinOrPolarization) = x
 end
 
 @testset "photon" begin
-    @test !QEDbase.is_fermion(QEDbase.Photon())
-    @test QEDbase.is_boson(QEDbase.Photon())
-    @test QEDbase.is_particle(QEDbase.Photon())
-    @test QEDbase.is_anti_particle(QEDbase.Photon())
-    @test QEDbase.charge(QEDbase.Photon()) == 0.0
-    @test QEDbase.mass(QEDbase.Photon()) == 0.0
-    @test test_broadcast.(QEDbase.Photon()) == QEDbase.Photon()
+    @test !QEDbase.is_fermion(Photon())
+    @test QEDbase.is_boson(Photon())
+    @test QEDbase.is_particle(Photon())
+    @test QEDbase.is_anti_particle(Photon())
+    @test QEDbase.charge(Photon()) == 0.0
+    @test QEDbase.mass(Photon()) == 0.0
+    @test test_broadcast.(Photon()) == Photon()
 
     @testset "$D" for D in [QEDbase.Incoming, QEDbase.Outgoing]
         @testset "$om $cth $phi" for (om, cth, phi) in
@@ -88,7 +88,7 @@ end
 
             mom = SFourMomentum(_cartesian_coordinates(om, om, cth, phi))
             both_photon_states = QEDbase.base_state(
-                QEDbase.Photon(), D(), mom, QEDbase.AllPolarization()
+                Photon(), D(), mom, QEDbase.AllPolarization()
             )
 
             # property test the photon states
@@ -105,36 +105,36 @@ end
             )
 
             # test the single polarization states
-            @test QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.PolarizationX()) ==
+            @test QEDbase.base_state(Photon(), D(), mom, QEDbase.PolarizationX()) ==
                 both_photon_states[1]
-            @test QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.PolarizationY()) ==
+            @test QEDbase.base_state(Photon(), D(), mom, QEDbase.PolarizationY()) ==
                 both_photon_states[2]
-            @test QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.PolX()) ==
+            @test QEDbase.base_state(Photon(), D(), mom, QEDbase.PolX()) ==
                 both_photon_states[1]
-            @test QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.PolY()) ==
+            @test QEDbase.base_state(Photon(), D(), mom, QEDbase.PolY()) ==
                 both_photon_states[2]
 
             @test QEDbase._as_svec(
-                QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.PolX())
+                QEDbase.base_state(Photon(), D(), mom, QEDbase.PolX())
             ) isa SVector
             @test QEDbase._as_svec(
-                QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.PolY())
+                QEDbase.base_state(Photon(), D(), mom, QEDbase.PolY())
             ) isa SVector
             @test QEDbase._as_svec(
-                QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.AllPol())
+                QEDbase.base_state(Photon(), D(), mom, QEDbase.AllPol())
             ) isa SVector
 
             @test QEDbase._as_svec(
-                QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.PolX())
+                QEDbase.base_state(Photon(), D(), mom, QEDbase.PolX())
             )[1] == both_photon_states[1]
             @test QEDbase._as_svec(
-                QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.PolY())
+                QEDbase.base_state(Photon(), D(), mom, QEDbase.PolY())
             )[1] == both_photon_states[2]
             @test QEDbase._as_svec(
-                QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.AllPol())
+                QEDbase.base_state(Photon(), D(), mom, QEDbase.AllPol())
             )[1] == both_photon_states[1]
             @test QEDbase._as_svec(
-                QEDbase.base_state(QEDbase.Photon(), D(), mom, QEDbase.AllPol())
+                QEDbase.base_state(Photon(), D(), mom, QEDbase.AllPol())
             )[2] == both_photon_states[2]
         end
     end

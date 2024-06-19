@@ -43,7 +43,7 @@ function _build_particle_booster(
     return (slashed(mom) + mass * one(DiracMatrix)) / (sqrt(abs(mom.t) + mass))
 end
 
-struct IncomingFermionSpinor <: QEDbase.AbstractParticleSpinor
+struct IncomingFermionSpinor <: AbstractParticleSpinor
     booster::DiracMatrix
 end
 
@@ -59,7 +59,7 @@ end
 
 const SpinorU = IncomingFermionSpinor
 
-struct OutgoingFermionSpinor <: QEDbase.AbstractParticleSpinor
+struct OutgoingFermionSpinor <: AbstractParticleSpinor
     booster::DiracMatrix
 end
 
@@ -86,7 +86,7 @@ function _build_antiparticle_booster(
     return (mass * one(DiracMatrix) - slashed(mom)) / (sqrt(abs(mom.t) + mass))
 end
 
-struct OutgoingAntiFermionSpinor <: QEDbase.AbstractParticleSpinor
+struct OutgoingAntiFermionSpinor <: AbstractParticleSpinor
     booster::DiracMatrix
 end
 
@@ -102,7 +102,7 @@ end
 
 const SpinorV = OutgoingAntiFermionSpinor
 
-struct IncomingAntiFermionSpinor <: QEDbase.AbstractParticleSpinor
+struct IncomingAntiFermionSpinor <: AbstractParticleSpinor
     booster::DiracMatrix
 end
 
@@ -118,7 +118,6 @@ end
 
 const SpinorVbar = IncomingAntiFermionSpinor
 
-# TODO: reenable when it's no longer in QEDbase
-# function getindex(SP::T, idx) where {T<:QEDbase.AbstractParticleSpinor}
-#     return idx in (1, 2) ? SP(idx) : throw(BoundsError())
-# end
+function getindex(SP::T, idx) where {T<:AbstractParticleSpinor}
+    return idx in (1, 2) ? SP(idx) : throw(BoundsError())
+end
