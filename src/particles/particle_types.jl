@@ -81,7 +81,7 @@ is_anti_particle(::MajoranaFermion) = true
 Concrete type for *electrons* as a particle species. Mostly used for dispatch. 
 
 ```jldoctest
-julia> using QEDbase
+julia> using QEDcore
 
 julia> Electron()
 electron
@@ -104,7 +104,7 @@ Base.show(io::IO, ::Electron) = print(io, "electron")
 Concrete type for *positrons* as a particle species. Mostly used for dispatch. 
 
 ```jldoctest
-julia> using QEDbase
+julia> using QEDcore
 
 julia> Positron()
 positron
@@ -182,7 +182,7 @@ is_anti_particle(::MajoranaBoson) = true
 Concrete type for the *photons* as a particle species. Mostly used for dispatch. 
 
 ```jldoctest
-julia> using QEDbase
+julia> using QEDcore
 
 julia> Photon()
 photon

@@ -20,7 +20,7 @@ end
 
 Representation of a particle with a state. It has four fields:
 - `dir::QEDbase.ParticleDirection`: The direction of the particle, `QEDbase.Incoming()` or `QEDbase.Outgoing()`.
-- `species::QEDbase.AbstractParticleType`: The species of the particle, `QEDbase.Electron()`, `QEDbase.Positron()` etc.
+- `species::QEDbase.AbstractParticleType`: The species of the particle, `Electron()`, `Positron()` etc.
 - `mom::QEDbase.AbstractFourMomentum`: The momentum of the particle.
 
 Overloads for [`is_fermion`](@ref), [`is_boson`](@ref), [`is_particle`](@ref), [`is_anti_particle`](@ref), [`is_incoming`](@ref), [`is_outgoing`](@ref), [`mass`](@ref), and [`charge`](@ref) are provided, delegating the call to the correct field and thus implementing the [`QEDbase.AbstractParticle`](@ref) interface.
@@ -28,11 +28,11 @@ Overloads for [`is_fermion`](@ref), [`is_boson`](@ref), [`is_particle`](@ref), [
 ```jldoctest
 julia> import QEDbase; using QEDprocesses
 
-julia> ParticleStateful(QEDbase.Incoming(), QEDbase.Electron(), SFourMomentum(1, 0, 0, 0))
+julia> ParticleStateful(QEDbase.Incoming(), Electron(), SFourMomentum(1, 0, 0, 0))
 ParticleStateful: incoming electron
     momentum: [1.0, 0.0, 0.0, 0.0]
 
-julia> ParticleStateful(QEDbase.Outgoing(), QEDbase.Photon(), SFourMomentum(1, 0, 0, 0))
+julia> ParticleStateful(QEDbase.Outgoing(), Photon(), SFourMomentum(1, 0, 0, 0))
 ParticleStateful: outgoing photon
     momentum: [1.0, 0.0, 0.0, 0.0]
 ```
@@ -72,12 +72,12 @@ julia> PhaseSpacePoint(
             PerturbativeQED(), 
             PhasespaceDefinition(SphericalCoordinateSystem(), ElectronRestFrame()), 
             (
-                ParticleStateful(QEDbase.Incoming(), QEDbase.Electron(), SFourMomentum(1, 0, 0, 0)), 
-                ParticleStateful(QEDbase.Incoming(), QEDbase.Photon(), SFourMomentum(1, 0, 0, 0))
+                ParticleStateful(QEDbase.Incoming(), Electron(), SFourMomentum(1, 0, 0, 0)), 
+                ParticleStateful(QEDbase.Incoming(), Photon(), SFourMomentum(1, 0, 0, 0))
             ), 
             (
-                ParticleStateful(QEDbase.Outgoing(), QEDbase.Electron(), SFourMomentum(1, 0, 0, 0)), 
-                ParticleStateful(QEDbase.Outgoing(), QEDbase.Photon(), SFourMomentum(1, 0, 0, 0))
+                ParticleStateful(QEDbase.Outgoing(), Electron(), SFourMomentum(1, 0, 0, 0)), 
+                ParticleStateful(QEDbase.Outgoing(), Photon(), SFourMomentum(1, 0, 0, 0))
             )
         )
 PhaseSpacePoint:

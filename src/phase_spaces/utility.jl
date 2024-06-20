@@ -22,7 +22,11 @@ end
     ::Tuple{Vararg{QEDbase.AbstractParticleType,M}},
     dir::QEDbase.ParticleDirection,
 ) where {N,M}
-    throw(InvalidInputError("expected $(M) $(dir) particles for the process but got $(N)"))
+    throw(
+        QEDbase.InvalidInputError(
+            "expected $(M) $(dir) particles for the process but got $(N)"
+        ),
+    )
     return nothing
 end
 
@@ -39,7 +43,7 @@ end
     SPECIES_T<:QEDbase.AbstractParticleType,
 }
     throw(
-        InvalidInputError(
+        QEDbase.InvalidInputError(
             "expected $(dir) $(SPECIES_T()) but got $(DIR_IN_T()) $(SPECIES_IN_T())"
         ),
     )
@@ -132,7 +136,7 @@ function _build_particle_statefuls(
     dir::QEDbase.ParticleDirection,
 ) where {N,ELEMENT<:QEDbase.AbstractFourMomentum}
     N == QEDbase.number_particles(proc, dir) || throw(
-        InvalidInputError(
+        QEDbase.InvalidInputError(
             "expected $(QEDbase.number_particles(proc, dir)) $(dir) particles for the process but got $(N)",
         ),
     )

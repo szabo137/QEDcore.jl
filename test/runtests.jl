@@ -38,7 +38,7 @@ begin
     end
 
     @time @safetestset "particle base states" begin
-        include("particles/base_states.jl")
+        include("particles/states.jl")
     end
 
     @time @safetestset "particle propagators" begin

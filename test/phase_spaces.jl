@@ -20,7 +20,7 @@ end
 
 @testset "Stateful Particle" begin
     DIRECTIONS = [QEDbase.Incoming(), QEDbase.Outgoing()]
-    SPECIES = [QEDbase.Electron(), QEDbase.Positron()] #=, Muon(), AntiMuon(), Tauon(), AntiTauon()=#
+    SPECIES = [Electron(), Positron()] #=, Muon(), AntiMuon(), Tauon(), AntiTauon()=#
 
     for (species, dir) in Iterators.product(SPECIES, DIRECTIONS)
         mom = rand(RNG, SFourMomentum)
@@ -62,10 +62,10 @@ end
     out_el_mom = rand(RNG, SFourMomentum)
     out_ph_mom = rand(RNG, SFourMomentum)
 
-    in_el = ParticleStateful(QEDbase.Incoming(), QEDbase.Electron(), in_el_mom)
-    in_ph = ParticleStateful(QEDbase.Incoming(), QEDbase.Photon(), in_ph_mom)
-    out_el = ParticleStateful(QEDbase.Outgoing(), QEDbase.Electron(), out_el_mom)
-    out_ph = ParticleStateful(QEDbase.Outgoing(), QEDbase.Photon(), out_ph_mom)
+    in_el = ParticleStateful(QEDbase.Incoming(), Electron(), in_el_mom)
+    in_ph = ParticleStateful(QEDbase.Incoming(), Photon(), in_ph_mom)
+    out_el = ParticleStateful(QEDbase.Outgoing(), Electron(), out_el_mom)
+    out_ph = ParticleStateful(QEDbase.Outgoing(), Photon(), out_ph_mom)
 
     in_particles_valid = (in_el, in_ph)
     in_particles_invalid = (in_el, out_ph)
@@ -74,9 +74,7 @@ end
     out_particles_invalid = (out_el, in_ph)
 
     model = TESTMODEL
-    process = TestImplementation.TestProcess(
-        (QEDbase.Electron(), QEDbase.Photon()), (QEDbase.Electron(), QEDbase.Photon())
-    )
+    process = TestImplementation.TestProcess((Electron(), Photon()), (Electron(), Photon()))
     phasespace_def = TESTPSDEF
 
     psp = PhaseSpacePoint(
@@ -151,19 +149,19 @@ end
         @test_throws BoundsError psp[QEDbase.Incoming(), 4]
         @test_throws BoundsError psp[QEDbase.Outgoing(), 4]
 
-        @test_throws InvalidInputError PhaseSpacePoint(
+        @test_throws QEDbase.InvalidInputError PhaseSpacePoint(
             process, model, phasespace_def, in_particles_invalid, out_particles_valid
         )
 
-        @test_throws InvalidInputError PhaseSpacePoint(
+        @test_throws QEDbase.InvalidInputError PhaseSpacePoint(
             process, model, phasespace_def, in_particles_valid, out_particles_invalid
         )
 
-        @test_throws InvalidInputError PhaseSpacePoint(
+        @test_throws QEDbase.InvalidInputError PhaseSpacePoint(
             process, model, phasespace_def, (in_ph, in_el), out_particles_valid
         )
 
-        @test_throws InvalidInputError PhaseSpacePoint(
+        @test_throws QEDbase.InvalidInputError PhaseSpacePoint(
             process, model, phasespace_def, in_particles_valid, (out_ph, out_el)
         )
     end
@@ -185,7 +183,7 @@ end
 
     @testset "Error handling from momenta" for (i, o) in
                                                Iterators.product([1, 3, 4, 5], [1, 3, 4, 5])
-        @test_throws InvalidInputError PhaseSpacePoint(
+        @test_throws QEDbase.InvalidInputError PhaseSpacePoint(
             process,
             model,
             phasespace_def,
@@ -218,18 +216,18 @@ end
         @test out_psp_from_moms isa OutPhaseSpacePoint
         @test !(out_psp_from_moms isa InPhaseSpacePoint)
 
-        @test_throws InvalidInputError InPhaseSpacePoint(
+        @test_throws QEDbase.InvalidInputError InPhaseSpacePoint(
             process, model, phasespace_def, in_particles_invalid
         )
-        @test_throws InvalidInputError OutPhaseSpacePoint(
+        @test_throws QEDbase.InvalidInputError OutPhaseSpacePoint(
             process, model, phasespace_def, out_particles_invalid
         )
 
         @testset "Error handling from momenta" for i in [1, 3, 4, 5]
-            @test_throws InvalidInputError InPhaseSpacePoint(
+            @test_throws QEDbase.InvalidInputError InPhaseSpacePoint(
                 process, model, phasespace_def, TestImplementation._rand_momenta(RNG, i)
             )
-            @test_throws InvalidInputError OutPhaseSpacePoint(
+            @test_throws QEDbase.InvalidInputError OutPhaseSpacePoint(
                 process, model, phasespace_def, TestImplementation._rand_momenta(RNG, i)
             )
         end
