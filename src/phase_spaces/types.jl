@@ -122,7 +122,7 @@ struct PhaseSpacePoint{
     IN_PARTICLES<:Tuple{Vararg{ParticleStateful}},
     OUT_PARTICLES<:Tuple{Vararg{ParticleStateful}},
     ELEMENT<:QEDbase.AbstractFourMomentum,
-} <: QEDbase.AbstractPhaseSpacePoint{PROC,MODEL,PSDEF,IN_PARTICLES,OUT_PARTICLES,ELEMENT}
+} <: QEDbase.AbstractPhaseSpacePoint{PROC,MODEL,PSDEF,IN_PARTICLES,OUT_PARTICLES}
     proc::PROC
     model::MODEL
     ps_def::PSDEF

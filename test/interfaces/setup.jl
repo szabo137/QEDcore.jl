@@ -155,8 +155,8 @@ struct TestProcess <: QEDbase.AbstractProcessDefinition end
 struct TestModel <: QEDbase.AbstractModelDefinition end
 
 struct TestProcessSetup <: QEDbase.AbstractProcessSetup end
-QEDbase.QEDbase.scattering_process(::TestProcessSetup) = TestProcess()
-QEDbase.QEDbase.physical_model(::TestProcessSetup) = TestModel()
+QEDbase.scattering_process(::TestProcessSetup) = TestProcess()
+QEDbase.physical_model(::TestProcessSetup) = TestModel()
 
 struct TestProcessSetupFAIL <: QEDbase.AbstractProcessSetup end
 
@@ -182,8 +182,8 @@ struct TestProcessSetupFAIL <: QEDbase.AbstractProcessSetup end
         INCOMING_PARTICLES = rand(RNG, PARTICLE_SET, N_INCOMING)
         OUTGOING_PARTICLES = rand(RNG, PARTICLE_SET, N_OUTGOING)
 
-        @suppress QEDbase.QEDbase.incoming_particles(::TestProcess) = INCOMING_PARTICLES
-        @suppress QEDbase.QEDbase.outgoing_particles(::TestProcess) = OUTGOING_PARTICLES
+        @suppress QEDbase.incoming_particles(::TestProcess) = INCOMING_PARTICLES
+        @suppress QEDbase.outgoing_particles(::TestProcess) = OUTGOING_PARTICLES
 
         @testset "delegated functions" begin
             stp = TestProcessSetup()

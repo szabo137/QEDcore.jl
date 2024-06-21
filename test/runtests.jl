@@ -29,7 +29,7 @@ begin
         include("particles/types.jl")
     end
 
-    @time @safetestset "particle types" begin
+    @time @safetestset "particle states" begin
         include("particles/states.jl")
     end
 

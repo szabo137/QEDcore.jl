@@ -19,8 +19,8 @@ function TestProcess(rng::AbstractRNG, N_in::Int, N_out::Int)
     return TestProcess(in_particles, out_particles)
 end
 
-QEDbase.QEDbase.incoming_particles(proc::TestProcess) = proc.incoming_particles
-QEDbase.QEDbase.outgoing_particles(proc::TestProcess) = proc.outgoing_particles
+QEDbase.incoming_particles(proc::TestProcess) = proc.incoming_particles
+QEDbase.outgoing_particles(proc::TestProcess) = proc.outgoing_particles
 
 struct TestProcess_FAIL{IP<:Tuple,OP<:Tuple} <: QEDbase.AbstractProcessDefinition
     incoming_particles::IP
@@ -69,8 +69,8 @@ function TestProcess_FAIL_DIFFCS(rng::AbstractRNG, N_in::Int, N_out::Int)
     return TestProcess_FAIL_DIFFCS(in_particles, out_particles)
 end
 
-QEDbase.QEDbase.incoming_particles(proc::TestProcess_FAIL_DIFFCS) = proc.incoming_particles
-QEDbase.QEDbase.outgoing_particles(proc::TestProcess_FAIL_DIFFCS) = proc.outgoing_particles
+QEDbase.incoming_particles(proc::TestProcess_FAIL_DIFFCS) = proc.incoming_particles
+QEDbase.outgoing_particles(proc::TestProcess_FAIL_DIFFCS) = proc.outgoing_particles
 
 # dummy phase space definition + failing phase space definition
 struct TestPhasespaceDef <: QEDbase.AbstractPhasespaceDefinition end
