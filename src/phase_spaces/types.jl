@@ -39,16 +39,17 @@ Representation of a particle with a state. It has four fields:
 - `species::QEDbase.AbstractParticleType`: The species of the particle, `Electron()`, `Positron()` etc.
 - `mom::QEDbase.AbstractFourMomentum`: The momentum of the particle.
 
-Overloads for [`is_fermion`](@ref), [`is_boson`](@ref), [`is_particle`](@ref), [`is_anti_particle`](@ref), [`is_incoming`](@ref), [`is_outgoing`](@ref), [`mass`](@ref), and [`charge`](@ref) are provided, delegating the call to the correct field and thus implementing the [`QEDbase.AbstractParticle`](@ref) interface.
+Overloads for `QEDbase.is_fermion`, `QEDbase.is_boson`, `QEDbase.is_particle`, `QEDbase.is_anti_particle`, `QEDbase.is_incoming`, `QEDbase.is_outgoing`, `QEDbase.mass`, and `QEDbase.charge` are provided, delegating the call to the correct field and thus implementing the `QEDbase.AbstractParticle` interface.
 
-```jldoctest
-julia> import QEDbase; using QEDprocesses
+TODO: Turn this back into a `jldoctest` once refactoring is done.
+```Julia
+julia> using QEDcore; using QEDbase
 
-julia> ParticleStateful(QEDbase.Incoming(), Electron(), SFourMomentum(1, 0, 0, 0))
+julia> ParticleStateful(Incoming(), Electron(), SFourMomentum(1, 0, 0, 0))
 ParticleStateful: incoming electron
     momentum: [1.0, 0.0, 0.0, 0.0]
 
-julia> ParticleStateful(QEDbase.Outgoing(), Photon(), SFourMomentum(1, 0, 0, 0))
+julia> ParticleStateful(Outgoing(), Photon(), SFourMomentum(1, 0, 0, 0))
 ParticleStateful: outgoing photon
     momentum: [1.0, 0.0, 0.0, 0.0]
 ```
@@ -76,24 +77,25 @@ end
 """
     PhaseSpacePoint
 
-Representation of a point in the phase space of a process. Contains the process ([`QEDbase.AbstractProcessDefinition`](@ref)), the model ([`QEDbase.AbstractModelDefinition`](@ref)), the phase space definition ([`QEDbase.AbstractPhasespaceDefinition`]), and stateful incoming and outgoing particles ([`ParticleStateful`](@ref)).
+Representation of a point in the phase space of a process. Contains the process (`QEDbase.AbstractProcessDefinition`), the model (`QEDbase.AbstractModelDefinition`), the phase space definition (`QEDbase.AbstractPhasespaceDefinition`), and stateful incoming and outgoing particles ([`ParticleStateful`](@ref)).
 
 The legality of the combination of the given process and the incoming and outgoing particles is checked on construction. If the numbers of particles mismatch, the types of particles mismatch (note that order is important), or incoming particles have an `QEDbase.Outgoing` direction, an error is thrown.
 
-```jldoctest
-julia> using QEDprocesses; using QEDbase; using QEDcore
+TODO: Turn this back into a `jldoctest` once refactoring is done.
+```Julia
+julia> using QEDcore; using QEDbase; using QEDprocesses
 
 julia> PhaseSpacePoint(
-            Compton(), 
-            PerturbativeQED(), 
-            PhasespaceDefinition(SphericalCoordinateSystem(), ElectronRestFrame()), 
+            Compton(),
+            PerturbativeQED(),
+            PhasespaceDefinition(SphericalCoordinateSystem(), ElectronRestFrame()),
             (
-                ParticleStateful(QEDbase.Incoming(), Electron(), SFourMomentum(1, 0, 0, 0)), 
-                ParticleStateful(QEDbase.Incoming(), Photon(), SFourMomentum(1, 0, 0, 0))
-            ), 
+                ParticleStateful(Incoming(), Electron(), SFourMomentum(1, 0, 0, 0)),
+                ParticleStateful(Incoming(), Photon(), SFourMomentum(1, 0, 0, 0))
+            ),
             (
-                ParticleStateful(QEDbase.Outgoing(), Electron(), SFourMomentum(1, 0, 0, 0)), 
-                ParticleStateful(QEDbase.Outgoing(), Photon(), SFourMomentum(1, 0, 0, 0))
+                ParticleStateful(Outgoing(), Electron(), SFourMomentum(1, 0, 0, 0)),
+                ParticleStateful(Outgoing(), Photon(), SFourMomentum(1, 0, 0, 0))
             )
         )
 PhaseSpacePoint:
@@ -162,7 +164,7 @@ end
 """
     InPhaseSpacePoint
 
-A partial type specialization on [`PhaseSpacePoint`](@ref) which can be used for dispatch in functions requiring only the in channel of the phase space to exist, for example implementations of [`_incident_flux`](@ref). No restrictions are imposed on the out-channel, which may or may not exist.
+A partial type specialization on [`PhaseSpacePoint`](@ref) which can be used for dispatch in functions requiring only the in channel of the phase space to exist, for example implementations of `QEDbase._incident_flux`. No restrictions are imposed on the out-channel, which may or may not exist.
 
 See also: [`OutPhaseSpacePoint`](@ref)
 """

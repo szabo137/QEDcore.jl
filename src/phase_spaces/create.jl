@@ -121,7 +121,7 @@ end
         out_coords::NTuple{M,Real},
     )
 
-Construct a [`PhaseSpacePoint`](@ref) from given coordinates by using the [`_generate_momenta`](@ref) interface.
+Construct a [`PhaseSpacePoint`](@ref) from given coordinates by using the `QEDbase._generate_momenta` interface.
 """
 function PhaseSpacePoint(
     proc::QEDbase.AbstractProcessDefinition,
@@ -142,7 +142,7 @@ end
         in_coords::NTuple{N,Real},
     )
 
-Construct a [`PhaseSpacePoint`](@ref) from given coordinates by using the [`_generate_momenta`](@ref) interface. The result will be `<: InPhaseSpacePoint` but **not** `<: OutPhaseSpacePoint`.
+Construct a [`PhaseSpacePoint`](@ref) from given coordinates by using the `QEDbase._generate_momenta` interface. The result will be `<: InPhaseSpacePoint` but **not** `<: OutPhaseSpacePoint`.
 
 !!! note
     A similar function for [`OutPhaseSpacePoint`](@ref) does not exist from coordinates, only a full [`PhaseSpacePoint`](@ref).
