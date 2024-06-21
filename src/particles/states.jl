@@ -1,3 +1,5 @@
+import QEDbase: base_state
+
 function _booster_fermion(mom::QEDbase.AbstractFourMomentum, mass::Real)
     return (slashed(mom) + mass * one(DiracMatrix)) / (sqrt(abs(QEDbase.getT(mom)) + mass))
 end

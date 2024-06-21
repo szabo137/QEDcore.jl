@@ -1,9 +1,5 @@
 module QEDcore
 
-import Base: *
-import StaticArrays: similar_type
-import QEDbase: base_state
-
 # lorentz vectors
 export SLorentzVector, MLorentzVector
 
