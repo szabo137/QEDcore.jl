@@ -1,12 +1,28 @@
+"""
+    SphericalCoordinateSystem <: AbstractCoordinateSystem
+
+TBW
+"""
 struct SphericalCoordinateSystem <: QEDbase.AbstractCoordinateSystem end
 
+"""
+    CenterOfMomentumFrame <: AbstractFrameOfReference
+
+TBW
+"""
 struct CenterOfMomentumFrame <: QEDbase.AbstractFrameOfReference end
+
+"""
+    ElectronRestFrame <: AbstractFrameOfReference
+
+TBW
+"""
 struct ElectronRestFrame <: QEDbase.AbstractFrameOfReference end
 
 """
     PhasespaceDefinition(coord_sys::QEDbase.AbstractCoordinateSystem, frame::QEDbase.AbstractFrameOfReference)
 
-Convenient type to dispatch on coordiante systems and frames of reference.
+Convenient type to dispatch on coordiante systems and frames of reference. Combines a `QEDbase.AbstractCoordinateSystem` with a `QEDbase.AbstractFrameOfReference`.
 """
 struct PhasespaceDefinition{
     CS<:QEDbase.AbstractCoordinateSystem,F<:QEDbase.AbstractFrameOfReference
@@ -41,7 +57,7 @@ struct ParticleStateful{
     DIR<:QEDbase.ParticleDirection,
     SPECIES<:QEDbase.AbstractParticleType,
     ELEMENT<:QEDbase.AbstractFourMomentum,
-} <: QEDbase.AbstractParticle
+} <: QEDbase.AbstractParticleStateful{DIR,SPECIES,ELEMENT}
     dir::DIR
     species::SPECIES
     mom::ELEMENT
@@ -65,7 +81,7 @@ Representation of a point in the phase space of a process. Contains the process 
 The legality of the combination of the given process and the incoming and outgoing particles is checked on construction. If the numbers of particles mismatch, the types of particles mismatch (note that order is important), or incoming particles have an `QEDbase.Outgoing` direction, an error is thrown.
 
 ```jldoctest
-julia> using QEDprocesses; import QEDbase
+julia> using QEDprocesses; using QEDbase; using QEDcore
 
 julia> PhaseSpacePoint(
             Compton(), 
@@ -104,7 +120,7 @@ struct PhaseSpacePoint{
     IN_PARTICLES<:Tuple{Vararg{ParticleStateful}},
     OUT_PARTICLES<:Tuple{Vararg{ParticleStateful}},
     ELEMENT<:QEDbase.AbstractFourMomentum,
-}
+} <: QEDbase.AbstractPhaseSpacePoint{PROC,MODEL,PSDEF,IN_PARTICLES,OUT_PARTICLES,ELEMENT}
     proc::PROC
     model::MODEL
     ps_def::PSDEF

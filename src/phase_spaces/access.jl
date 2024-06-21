@@ -1,39 +1,9 @@
-import QEDbase:
-    is_particle,
-    is_anti_particle,
-    is_fermion,
-    is_boson,
-    is_incoming,
-    is_outgoing,
-    mass,
-    charge
+# accessor interface particle stateful
+QEDbase.particle_direction(part::ParticleStateful) = part.dir
+QEDbase.particle_species(part::ParticleStateful) = part.species
+QEDbase.momentum(part::ParticleStateful) = part.mom
 
-# particle interface
-@inline is_incoming(particle::ParticleStateful) = is_incoming(particle.dir)
-@inline is_outgoing(particle::ParticleStateful) = is_outgoing(particle.dir)
-@inline QEDbase.is_fermion(particle::ParticleStateful) =
-    QEDbase.is_fermion(particle.species)
-@inline QEDbase.is_boson(particle::ParticleStateful) = QEDbase.is_boson(particle.species)
-@inline QEDbase.is_particle(particle::ParticleStateful) =
-    QEDbase.is_particle(particle.species)
-@inline QEDbase.is_anti_particle(particle::ParticleStateful) =
-    QEDbase.is_anti_particle(particle.species)
-@inline QEDbase.mass(particle::ParticleStateful) = QEDbase.mass(particle.species)
-@inline QEDbase.charge(particle::ParticleStateful) = QEDbase.charge(particle.species)
-
-# accessors
-particle_direction(part::ParticleStateful) = part.dir
-particle_species(part::ParticleStateful) = part.species
-momentum(part::ParticleStateful) = part.mom
-
-"""
-    momenta(psp::PhaseSpacePoint, ::ParticleDirection)
-
-Return a `Tuple` of all the particles' momenta for the given `ParticleDirection`.
-"""
-momenta(psp::PhaseSpacePoint, ::QEDbase.Incoming) = momentum.(psp.in_particles)
-momenta(psp::PhaseSpacePoint, ::QEDbase.Outgoing) = momentum.(psp.out_particles)
-
+# accessor interface phase space point
 """
     Base.getindex(psp::PhaseSpacePoint, dir::Incoming, n::Int)
 
@@ -52,11 +22,6 @@ function Base.getindex(psp::PhaseSpacePoint, ::QEDbase.Outgoing, n::Int)
     return psp.out_particles[n]
 end
 
-"""
-    momentum(psp::PhaseSpacePoint, dir::ParticleDirection, n::Int)
-
-Returns the momentum of the `n`th particle in the given [`PhaseSpacePoint`](@ref) which has direction `dir`. If `n` is outside the valid range for this phase space point, a `BoundsError` is thrown.
-"""
-function momentum(psp::PhaseSpacePoint, dir::QEDbase.ParticleDirection, n::Int)
-    return psp[dir, n].mom
-end
+QEDbase.process(psp::PhaseSpacePoint) = psp.proc
+QEDbase.model(psp::PhaseSpacePoint) = psp.model
+QEDbase.phase_space_definition(psp::PhaseSpacePoint) = psp.ps_def

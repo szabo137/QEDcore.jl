@@ -33,18 +33,18 @@ end
         @test QEDbase.is_particle(particle_stateful) == QEDbase.is_particle(species)
         @test QEDbase.is_anti_particle(particle_stateful) ==
             QEDbase.is_anti_particle(species)
-        @test is_incoming(particle_stateful) == is_incoming(dir)
-        @test is_outgoing(particle_stateful) == is_outgoing(dir)
+        @test QEDbase.is_incoming(particle_stateful) == QEDbase.is_incoming(dir)
+        @test QEDbase.is_outgoing(particle_stateful) == QEDbase.is_outgoing(dir)
         @test QEDbase.mass(particle_stateful) == QEDbase.mass(species)
         @test QEDbase.charge(particle_stateful) == QEDbase.charge(species)
 
         # accessors
         @test particle_stateful.dir == dir
-        @test particle_direction(particle_stateful) == particle_stateful.dir
+        @test QEDbase.particle_direction(particle_stateful) == particle_stateful.dir
         @test particle_stateful.species == species
-        @test particle_species(particle_stateful) == particle_stateful.species
+        @test QEDbase.particle_species(particle_stateful) == particle_stateful.species
         @test particle_stateful.mom == mom
-        @test momentum(particle_stateful) == mom
+        @test QEDbase.momentum(particle_stateful) == mom
 
         # printing
         print(BUF, particle_stateful)
@@ -92,10 +92,10 @@ end
     ) isa RegexMatch
 
     @testset "Accessor" begin
-        @test momentum(psp, QEDbase.Incoming(), 1) == in_el.mom
-        @test momentum(psp, QEDbase.Incoming(), 2) == in_ph.mom
-        @test momentum(psp, QEDbase.Outgoing(), 1) == out_el.mom
-        @test momentum(psp, QEDbase.Outgoing(), 2) == out_ph.mom
+        @test QEDbase.momentum(psp, QEDbase.Incoming(), 1) == in_el.mom
+        @test QEDbase.momentum(psp, QEDbase.Incoming(), 2) == in_ph.mom
+        @test QEDbase.momentum(psp, QEDbase.Outgoing(), 1) == out_el.mom
+        @test QEDbase.momentum(psp, QEDbase.Outgoing(), 2) == out_ph.mom
 
         @test psp[QEDbase.Incoming(), 1] == in_el
         @test psp[QEDbase.Incoming(), 2] == in_ph
@@ -139,10 +139,10 @@ end
             )
         end
 
-        @test_throws BoundsError momentum(psp, QEDbase.Incoming(), -1)
-        @test_throws BoundsError momentum(psp, QEDbase.Outgoing(), -1)
-        @test_throws BoundsError momentum(psp, QEDbase.Incoming(), 4)
-        @test_throws BoundsError momentum(psp, QEDbase.Outgoing(), 4)
+        @test_throws BoundsError QEDbase.momentum(psp, QEDbase.Incoming(), -1)
+        @test_throws BoundsError QEDbase.momentum(psp, QEDbase.Outgoing(), -1)
+        @test_throws BoundsError QEDbase.momentum(psp, QEDbase.Incoming(), 4)
+        @test_throws BoundsError QEDbase.momentum(psp, QEDbase.Outgoing(), 4)
 
         @test_throws BoundsError psp[QEDbase.Incoming(), -1]
         @test_throws BoundsError psp[QEDbase.Outgoing(), -1]
