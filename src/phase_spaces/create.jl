@@ -130,7 +130,7 @@ function PhaseSpacePoint(
     in_coords::NTuple{N,Real},
     out_coords::NTuple{M,Real},
 ) where {N,M}
-    in_ps, out_ps = _generate_momenta(proc, model, ps_def, in_coords, out_coords)
+    in_ps, out_ps = QEDbase._generate_momenta(proc, model, ps_def, in_coords, out_coords)
     return PhaseSpacePoint(proc, model, ps_def, in_ps, out_ps)
 end
 
@@ -153,6 +153,6 @@ function InPhaseSpacePoint(
     ps_def::AbstractPhasespaceDefinition,
     in_coords::NTuple{N,Real},
 ) where {N}
-    in_ps = _generate_incoming_momenta(proc, model, ps_def, in_coords)
+    in_ps = QEDbase._generate_incoming_momenta(proc, model, ps_def, in_coords)
     return InPhaseSpacePoint(proc, model, ps_def, in_ps)
 end
