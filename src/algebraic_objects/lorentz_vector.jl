@@ -20,7 +20,7 @@ Concrete implementation of a generic static Lorentz vector. Each manipulation of
 # Fields
 $(TYPEDFIELDS)
 """
-struct SLorentzVector{T} <: QEDbase.AbstractLorentzVector{T}
+struct SLorentzVector{T} <: AbstractLorentzVector{T}
     "`t` component"
     t::T
 
@@ -46,7 +46,7 @@ end
 
 # TODO: this breaks incremental compilation because it's trying to eval permanent changes in a different module
 #register_LorentzVectorLike(SLorentzVector)
-@traitimpl QEDbase.IsLorentzVectorLike{SLorentzVector}
+@traitimpl IsLorentzVectorLike{SLorentzVector}
 
 """
 $(TYPEDEF)
@@ -56,7 +56,7 @@ Concrete implementation of a generic mutable Lorentz vector. Each manipulation o
 # Fields
 $(TYPEDFIELDS)
 """
-mutable struct MLorentzVector{T} <: QEDbase.AbstractLorentzVector{T}
+mutable struct MLorentzVector{T} <: AbstractLorentzVector{T}
     "`t` component"
     t::T
 
@@ -98,5 +98,5 @@ end
 
 # TODO: this breaks incremental compilation because it's trying to eval permanent changes in a different module
 #register_LorentzVectorLike(MLorentzVector)
-@traitimpl QEDbase.IsLorentzVectorLike{MLorentzVector}
-@traitimpl QEDbase.IsMutableLorentzVectorLike{MLorentzVector}
+@traitimpl IsLorentzVectorLike{MLorentzVector}
+@traitimpl IsMutableLorentzVectorLike{MLorentzVector}

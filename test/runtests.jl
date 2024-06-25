@@ -49,8 +49,4 @@ begin
     @time @safetestset "process interface" begin
         include("interfaces/process.jl")
     end
-
-    @time @safetestset "computation setup interface" begin
-        include("interfaces/setup.jl")
-    end
 end

@@ -8,7 +8,7 @@ $(TYPEDEF)
 
 Concrete type to model a Dirac four-spinor with complex-valued components. These are the elements of an actual spinor space.
 """
-struct BiSpinor <: QEDbase.AbstractDiracVector{ComplexF64}
+struct BiSpinor <: AbstractDiracVector{ComplexF64}
     el1::ComplexF64
     el2::ComplexF64
     el3::ComplexF64
@@ -20,7 +20,7 @@ $(TYPEDEF)
 
 Concrete type to model an adjoint Dirac four-spinor with complex-valued components. These are the elements of the dual spinor space.
 """
-struct AdjointBiSpinor <: QEDbase.AbstractDiracVector{ComplexF64}
+struct AdjointBiSpinor <: AbstractDiracVector{ComplexF64}
     el1::ComplexF64
     el2::ComplexF64
     el3::ComplexF64
@@ -36,7 +36,7 @@ $(TYPEDEF)
 
 Concrete type to model Dirac matrices, i.e. matrix representations of linear mappings between two spinor spaces.
 """
-struct DiracMatrix <: QEDbase.AbstractDiracMatrix{ComplexF64}
+struct DiracMatrix <: AbstractDiracMatrix{ComplexF64}
     el11::ComplexF64
     el12::ComplexF64
     el13::ComplexF64

@@ -4,7 +4,17 @@
 #
 #######
 
-import QEDbase: getT, getX, getY, getZ, setT!, setX!, setY!, setZ!
+import QEDbase:
+    getT,
+    getX,
+    getY,
+    getZ,
+    setT!,
+    setX!,
+    setY!,
+    setZ!,
+    IsLorentzVectorLike,
+    IsMutableLorentzVectorLike
 import StaticArrays: similar_type
 
 """
@@ -15,7 +25,7 @@ Builds a static LorentzVectorLike with real components used to statically model 
 # Fields
 $(TYPEDFIELDS)
 """
-struct SFourMomentum <: QEDbase.AbstractFourMomentum
+struct SFourMomentum <: AbstractFourMomentum
     "energy component"
     E::Float64
 
@@ -54,7 +64,7 @@ end
 
 # TODO: this breaks incremental compilation because it's trying to eval permanent changes in a different module
 #register_LorentzVectorLike(SFourMomentum)
-@traitimpl QEDbase.IsLorentzVectorLike{SFourMomentum}
+@traitimpl IsLorentzVectorLike{SFourMomentum}
 
 #######
 #
@@ -69,7 +79,7 @@ Builds a mutable LorentzVector with real components used to statically model the
 # Fields
 $(TYPEDFIELDS)
 """
-mutable struct MFourMomentum <: QEDbase.AbstractFourMomentum
+mutable struct MFourMomentum <: AbstractFourMomentum
     "energy component"
     E::Float64
 
@@ -106,23 +116,23 @@ end
 @inline getY(p::MFourMomentum) = p.py
 @inline getZ(p::MFourMomentum) = p.pz
 
-function QEDbase.setT!(lv::MFourMomentum, value::Float64)
+function setT!(lv::MFourMomentum, value::Float64)
     return lv.E = value
 end
 
-function QEDbase.setX!(lv::MFourMomentum, value::Float64)
+function setX!(lv::MFourMomentum, value::Float64)
     return lv.px = value
 end
 
-function QEDbase.setY!(lv::MFourMomentum, value::Float64)
+function setY!(lv::MFourMomentum, value::Float64)
     return lv.py = value
 end
 
-function QEDbase.setZ!(lv::MFourMomentum, value::Float64)
+function setZ!(lv::MFourMomentum, value::Float64)
     return lv.pz = value
 end
 
 # TODO: this breaks incremental compilation because it's trying to eval permanent changes in a different module
 # register_LorentzVectorLike(MFourMomentum)
-@traitimpl QEDbase.IsLorentzVectorLike{MFourMomentum}
-@traitimpl QEDbase.IsMutableLorentzVectorLike{MFourMomentum}
+@traitimpl IsLorentzVectorLike{MFourMomentum}
+@traitimpl IsMutableLorentzVectorLike{MFourMomentum}

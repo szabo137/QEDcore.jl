@@ -7,11 +7,11 @@
 #       the definition below looks *transposed*.
 ####
 
-function gamma(::Type{T})::SLorentzVector where {T<:QEDbase.AbstractGammaRepresentation}
+function gamma(::Type{T})::SLorentzVector where {T<:AbstractGammaRepresentation}
     return SLorentzVector(_gamma0(T), _gamma1(T), _gamma2(T), _gamma3(T))
 end
 
-struct DiracGammaRepresentation <: QEDbase.AbstractGammaRepresentation end
+struct DiracGammaRepresentation <: AbstractGammaRepresentation end
 
 #! format: off
 function _gamma0(::Type{DiracGammaRepresentation})::DiracMatrix
@@ -52,10 +52,10 @@ const GAMMA = gamma()
 
 function slashed(
     ::Type{TG}, LV::TV
-) where {TG<:QEDbase.AbstractGammaRepresentation,TV<:QEDbase.AbstractLorentzVector}
+) where {TG<:AbstractGammaRepresentation,TV<:AbstractLorentzVector}
     return gamma(TG) * LV
 end
 
-function slashed(LV::T) where {T<:QEDbase.AbstractLorentzVector}
+function slashed(LV::T) where {T<:AbstractLorentzVector}
     return GAMMA * LV
 end

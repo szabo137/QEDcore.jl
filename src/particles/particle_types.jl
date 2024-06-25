@@ -20,7 +20,7 @@ Abstract base types for particle species that act like fermions in the sense of 
 !!! note "particle interface"
     Every concrete subtype of [`FermionLike`](@ref) has `is_fermion(::FermionLike) = true`.
 """
-abstract type FermionLike <: QEDbase.AbstractParticleType end
+abstract type FermionLike <: AbstractParticleType end
 
 is_fermion(::FermionLike) = true
 
@@ -129,7 +129,7 @@ Abstract base types for particle species that act like bosons in the sense of pa
 !!! note "particle interface"
     Every concrete subtype of `BosonLike` has `is_boson(::BosonLike) = true`.
 """
-abstract type BosonLike <: QEDbase.AbstractParticleType end
+abstract type BosonLike <: AbstractParticleType end
 
 is_boson(::BosonLike) = true
 

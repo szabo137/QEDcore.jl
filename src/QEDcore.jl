@@ -33,9 +33,9 @@ export SphericalCoordinateSystem
 export CenterOfMomentumFrame, ElectronRestFrame
 export PhasespaceDefinition
 export ParticleStateful, PhaseSpacePoint, InPhaseSpacePoint, OutPhaseSpacePoint
-export spin, polarization, particle_direction, particle_species, momentum, momenta, getindex
+export spin, polarization, momenta, getindex
 
-using QEDbase: QEDbase
+using QEDbase
 using DocStringExtensions
 using StaticArrays
 using SimpleTraits
