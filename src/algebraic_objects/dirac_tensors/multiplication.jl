@@ -3,6 +3,9 @@
 # Concrete implementation of multiplication for Dirac Tensors
 #
 #######
+
+import Base: *
+
 """
 $(TYPEDSIGNATURES)
 

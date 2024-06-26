@@ -5,6 +5,7 @@
 #######
 
 import QEDbase: getT, getX, getY, getZ, setT!, setX!, setY!, setZ!
+import StaticArrays: similar_type
 
 #######
 #

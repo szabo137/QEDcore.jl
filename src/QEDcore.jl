@@ -1,9 +1,5 @@
 module QEDcore
 
-import Base: *
-import StaticArrays: similar_type
-import QEDbase: base_state
-
 # lorentz vectors
 export SLorentzVector, MLorentzVector
 
@@ -32,6 +28,13 @@ export @valid_spinor_input
 # particle base states
 export base_state
 
+# phase space
+export SphericalCoordinateSystem
+export CenterOfMomentumFrame, ElectronRestFrame
+export PhasespaceDefinition
+export ParticleStateful, PhaseSpacePoint, InPhaseSpacePoint, OutPhaseSpacePoint
+export spin, polarization, particle_direction, particle_species, momentum, momenta, getindex
+
 using QEDbase: QEDbase
 using DocStringExtensions
 using StaticArrays
@@ -40,12 +43,19 @@ using SimpleTraits
 include("algebraic_objects/dirac_tensors/types.jl")
 include("algebraic_objects/dirac_tensors/multiplication.jl")
 
+include("phase_spaces/types.jl")
+include("phase_spaces/access.jl")
+include("phase_spaces/create.jl")
+include("phase_spaces/print.jl")
+include("phase_spaces/utility.jl")
+
 include("algebraic_objects/four_momentum.jl")
 include("algebraic_objects/lorentz_vector.jl")
 include("algebraic_objects/gamma_matrices.jl")
 
 include("particles/particle_types.jl")
-include("particles/spinors.jl")
+include("particles/propagators.jl")
 include("particles/states.jl")
+include("particles/spinors.jl")
 
 end

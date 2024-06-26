@@ -3,6 +3,10 @@ using Test
 using SafeTestsets
 
 begin
+    @time @safetestset "phase spaces" begin
+        include("phase_spaces.jl")
+    end
+
     # algebraic objects
     @time @safetestset "four momentum" begin
         include("algebraic_objects/four_momentum.jl")
@@ -25,11 +29,28 @@ begin
         include("particles/types.jl")
     end
 
-    @time @safetestset "particle types" begin
+    @time @safetestset "particle states" begin
         include("particles/states.jl")
     end
 
     @time @safetestset "particle spinors" begin
         include("particles/spinors.jl")
+    end
+
+    @time @safetestset "particle base states" begin
+        include("particles/states.jl")
+    end
+
+    @time @safetestset "particle propagators" begin
+        include("particles/propagators.jl")
+    end
+
+    # interfaces
+    @time @safetestset "process interface" begin
+        include("interfaces/process.jl")
+    end
+
+    @time @safetestset "computation setup interface" begin
+        include("interfaces/setup.jl")
     end
 end

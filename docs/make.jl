@@ -1,7 +1,16 @@
+using Pkg
+
+# targeting the correct source code
+# this asumes the make.jl script is located in QEDcore.jl/docs
+project_path = Base.Filesystem.joinpath(Base.Filesystem.dirname(Base.source_path()), "..")
+Pkg.develop(; path=project_path)
+
+Pkg.add(; url="https://github.com/QEDjl-project/QEDbase.jl/", rev="dev")
+
 using QEDcore
 using Documenter
 
-DocMeta.setdocmeta!(QEDcore, :DocTestSetup, :(using QEDcore); recursive=true)
+# DocMeta.setdocmeta!(QEDcore, :DocTestSetup, :(using QEDcore); recursive=true)
 
 makedocs(;
     modules=[QEDcore],
