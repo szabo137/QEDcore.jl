@@ -3,15 +3,6 @@ using QEDcore
 using StaticArrays
 using Random
 
-# TODO this can be deleted when QEDbase is released again
-# fix ambiguity of the types while both core and base export these
-import QEDcore:
-    AntiFermion, MajoranaFermion, Electron, Positron, Boson, AntiBoson, MajoranaBoson
-
-# TODO this can be deleted when QEDbase is released again
-# fix for the broadcast tests
-Base.broadcastable(part::QEDbase.AbstractParticleType) = Ref(part)
-
 # test function to test scalar broadcasting
 test_broadcast(x::AbstractParticle) = x
 test_broadcast(x::ParticleDirection) = x

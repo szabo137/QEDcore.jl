@@ -1,5 +1,3 @@
-import Base.getindex
-
 const SPINOR_VALIDITY_CHECK = Ref(true)
 
 macro valid_spinor_input(ex)
@@ -22,11 +20,11 @@ const BASE_ANTIPARTICLE_SPINOR = [
 
 @inline function _check_spinor_input(
     mom::T, mass::Float64
-) where {T<:QEDbase.AbstractLorentzVector{TE}} where {TE<:Real}
-    if SPINOR_VALIDITY_CHECK[] && !QEDbase.isonshell(mom, mass)
+) where {T<:AbstractLorentzVector{TE}} where {TE<:Real}
+    if SPINOR_VALIDITY_CHECK[] && !isonshell(mom, mass)
         throw(
             SpinorConstructionError(
-                "P^2 = $(QEDbase.getMass2(mom)) needs to be equal to mass^2=$(mass^2)"
+                "P^2 = $(getMass2(mom)) needs to be equal to mass^2=$(mass^2)"
             ),
         )
     end
@@ -38,7 +36,7 @@ end
 
 function _build_particle_booster(
     mom::T, mass::Float64
-) where {T<:QEDbase.AbstractLorentzVector{TE}} where {TE<:Real}
+) where {T<:AbstractLorentzVector{TE}} where {TE<:Real}
     _check_spinor_input(mom, mass)
     return (slashed(mom) + mass * one(DiracMatrix)) / (sqrt(abs(mom.t) + mass))
 end
@@ -49,7 +47,7 @@ end
 
 function IncomingFermionSpinor(
     mom::T, mass::Float64
-) where {T<:QEDbase.AbstractLorentzVector{TE}} where {TE<:Real}
+) where {T<:AbstractLorentzVector{TE}} where {TE<:Real}
     return IncomingFermionSpinor(_build_particle_booster(mom, mass))
 end
 
@@ -65,7 +63,7 @@ end
 
 function OutgoingFermionSpinor(
     mom::T, mass::Float64
-) where {T<:QEDbase.AbstractLorentzVector{TE}} where {TE<:Real}
+) where {T<:AbstractLorentzVector{TE}} where {TE<:Real}
     return OutgoingFermionSpinor(_build_particle_booster(mom, mass))
 end
 
@@ -81,7 +79,7 @@ const SpinorUbar = OutgoingFermionSpinor
 
 function _build_antiparticle_booster(
     mom::T, mass::Float64
-) where {T<:QEDbase.AbstractLorentzVector{TE}} where {TE<:Real}
+) where {T<:AbstractLorentzVector{TE}} where {TE<:Real}
     _check_spinor_input(mom, mass)
     return (mass * one(DiracMatrix) - slashed(mom)) / (sqrt(abs(mom.t) + mass))
 end
@@ -92,7 +90,7 @@ end
 
 function OutgoingAntiFermionSpinor(
     mom::T, mass::Float64
-) where {T<:QEDbase.AbstractLorentzVector{TE}} where {TE<:Real}
+) where {T<:AbstractLorentzVector{TE}} where {TE<:Real}
     return OutgoingAntiFermionSpinor(_build_antiparticle_booster(mom, mass))
 end
 
@@ -108,7 +106,7 @@ end
 
 function IncomingAntiFermionSpinor(
     mom::T, mass::Float64
-) where {T<:QEDbase.AbstractLorentzVector{TE}} where {TE<:Real}
+) where {T<:AbstractLorentzVector{TE}} where {TE<:Real}
     return IncomingAntiFermionSpinor(_build_antiparticle_booster(mom, mass))
 end
 
@@ -118,6 +116,6 @@ end
 
 const SpinorVbar = IncomingAntiFermionSpinor
 
-function getindex(SP::T, idx) where {T<:AbstractParticleSpinor}
+function Base.getindex(SP::T, idx) where {T<:AbstractParticleSpinor}
     return idx in (1, 2) ? SP(idx) : throw(BoundsError())
 end

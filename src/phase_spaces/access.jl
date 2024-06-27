@@ -9,7 +9,7 @@ QEDbase.momentum(part::ParticleStateful) = part.mom
 
 Overload for the array indexing operator `[]`. Returns the nth incoming particle in this phase space point.
 """
-function Base.getindex(psp::PhaseSpacePoint, ::QEDbase.Incoming, n::Int)
+function Base.getindex(psp::PhaseSpacePoint, ::Incoming, n::Int)
     return psp.in_particles[n]
 end
 
@@ -18,7 +18,7 @@ end
 
 Overload for the array indexing operator `[]`. Returns the nth outgoing particle in this phase space point.
 """
-function Base.getindex(psp::PhaseSpacePoint, ::QEDbase.Outgoing, n::Int)
+function Base.getindex(psp::PhaseSpacePoint, ::Outgoing, n::Int)
     return psp.out_particles[n]
 end
 
@@ -26,5 +26,5 @@ QEDbase.process(psp::PhaseSpacePoint) = psp.proc
 QEDbase.model(psp::PhaseSpacePoint) = psp.model
 QEDbase.phase_space_definition(psp::PhaseSpacePoint) = psp.ps_def
 
-QEDbase.particles(psp::PhaseSpacePoint, ::QEDbase.Incoming) = psp.in_particles
-QEDbase.particles(psp::PhaseSpacePoint, ::QEDbase.Outgoing) = psp.out_particles
+QEDbase.particles(psp::PhaseSpacePoint, ::Incoming) = psp.in_particles
+QEDbase.particles(psp::PhaseSpacePoint, ::Outgoing) = psp.out_particles

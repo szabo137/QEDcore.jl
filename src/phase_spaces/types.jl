@@ -3,46 +3,44 @@
 
 TBW
 """
-struct SphericalCoordinateSystem <: QEDbase.AbstractCoordinateSystem end
+struct SphericalCoordinateSystem <: AbstractCoordinateSystem end
 
 """
     CenterOfMomentumFrame <: AbstractFrameOfReference
 
 TBW
 """
-struct CenterOfMomentumFrame <: QEDbase.AbstractFrameOfReference end
+struct CenterOfMomentumFrame <: AbstractFrameOfReference end
 
 """
     ElectronRestFrame <: AbstractFrameOfReference
 
 TBW
 """
-struct ElectronRestFrame <: QEDbase.AbstractFrameOfReference end
+struct ElectronRestFrame <: AbstractFrameOfReference end
 
 """
-    PhasespaceDefinition(coord_sys::QEDbase.AbstractCoordinateSystem, frame::QEDbase.AbstractFrameOfReference)
+    PhasespaceDefinition(coord_sys::AbstractCoordinateSystem, frame::AbstractFrameOfReference)
 
-Convenient type to dispatch on coordiante systems and frames of reference. Combines a `QEDbase.AbstractCoordinateSystem` with a `QEDbase.AbstractFrameOfReference`.
+Convenient type to dispatch on coordiante systems and frames of reference. Combines a `AbstractCoordinateSystem` with a `AbstractFrameOfReference`.
 """
-struct PhasespaceDefinition{
-    CS<:QEDbase.AbstractCoordinateSystem,F<:QEDbase.AbstractFrameOfReference
-} <: QEDbase.AbstractPhasespaceDefinition
+struct PhasespaceDefinition{CS<:AbstractCoordinateSystem,F<:AbstractFrameOfReference} <:
+       AbstractPhasespaceDefinition
     coord_sys::CS
     frame::F
 end
 
 """
-    ParticleStateful <: QEDbase.AbstractParticle
+    ParticleStateful <: AbstractParticle
 
 Representation of a particle with a state. It has four fields:
-- `dir::QEDbase.ParticleDirection`: The direction of the particle, `QEDbase.Incoming()` or `QEDbase.Outgoing()`.
-- `species::QEDbase.AbstractParticleType`: The species of the particle, `Electron()`, `Positron()` etc.
-- `mom::QEDbase.AbstractFourMomentum`: The momentum of the particle.
+- `dir::ParticleDirection`: The direction of the particle, `Incoming()` or `Outgoing()`.
+- `species::AbstractParticleType`: The species of the particle, `Electron()`, `Positron()` etc.
+- `mom::AbstractFourMomentum`: The momentum of the particle.
 
-Overloads for `QEDbase.is_fermion`, `QEDbase.is_boson`, `QEDbase.is_particle`, `QEDbase.is_anti_particle`, `QEDbase.is_incoming`, `QEDbase.is_outgoing`, `QEDbase.mass`, and `QEDbase.charge` are provided, delegating the call to the correct field and thus implementing the `QEDbase.AbstractParticle` interface.
+Overloads for `is_fermion`, `is_boson`, `is_particle`, `is_anti_particle`, `is_incoming`, `is_outgoing`, `mass`, and `charge` are provided, delegating the call to the correct field and thus implementing the `AbstractParticle` interface.
 
-TODO: Turn this back into a `jldoctest` once refactoring is done.
-```Julia
+```jldoctest
 julia> using QEDcore; using QEDbase
 
 julia> ParticleStateful(Incoming(), Electron(), SFourMomentum(1, 0, 0, 0))
@@ -55,10 +53,8 @@ ParticleStateful: outgoing photon
 ```
 """
 struct ParticleStateful{
-    DIR<:QEDbase.ParticleDirection,
-    SPECIES<:QEDbase.AbstractParticleType,
-    ELEMENT<:QEDbase.AbstractFourMomentum,
-} <: QEDbase.AbstractParticleStateful{DIR,SPECIES,ELEMENT}
+    DIR<:ParticleDirection,SPECIES<:AbstractParticleType,ELEMENT<:AbstractFourMomentum
+} <: AbstractParticleStateful{DIR,SPECIES,ELEMENT}
     dir::DIR
     species::SPECIES
     mom::ELEMENT
@@ -66,9 +62,7 @@ struct ParticleStateful{
     function ParticleStateful(
         dir::DIR, species::SPECIES, mom::ELEMENT
     ) where {
-        DIR<:QEDbase.ParticleDirection,
-        SPECIES<:QEDbase.AbstractParticleType,
-        ELEMENT<:QEDbase.AbstractFourMomentum,
+        DIR<:ParticleDirection,SPECIES<:AbstractParticleType,ELEMENT<:AbstractFourMomentum
     }
         return new{DIR,SPECIES,ELEMENT}(dir, species, mom)
     end
@@ -77,12 +71,11 @@ end
 """
     PhaseSpacePoint
 
-Representation of a point in the phase space of a process. Contains the process (`QEDbase.AbstractProcessDefinition`), the model (`QEDbase.AbstractModelDefinition`), the phase space definition (`QEDbase.AbstractPhasespaceDefinition`), and stateful incoming and outgoing particles ([`ParticleStateful`](@ref)).
+Representation of a point in the phase space of a process. Contains the process (`AbstractProcessDefinition`), the model (`AbstractModelDefinition`), the phase space definition (`AbstractPhasespaceDefinition`), and stateful incoming and outgoing particles ([`ParticleStateful`](@ref)).
 
-The legality of the combination of the given process and the incoming and outgoing particles is checked on construction. If the numbers of particles mismatch, the types of particles mismatch (note that order is important), or incoming particles have an `QEDbase.Outgoing` direction, an error is thrown.
+The legality of the combination of the given process and the incoming and outgoing particles is checked on construction. If the numbers of particles mismatch, the types of particles mismatch (note that order is important), or incoming particles have an `Outgoing` direction, an error is thrown.
 
-TODO: Turn this back into a `jldoctest` once refactoring is done.
-```Julia
+```jldoctest
 julia> using QEDcore; using QEDbase; using QEDprocesses
 
 julia> PhaseSpacePoint(
@@ -116,13 +109,13 @@ PhaseSpacePoint:
     A completely empty `PhaseSpacePoint` is not allowed.
 """
 struct PhaseSpacePoint{
-    PROC<:QEDbase.AbstractProcessDefinition,
-    MODEL<:QEDbase.AbstractModelDefinition,
-    PSDEF<:QEDbase.AbstractPhasespaceDefinition,
+    PROC<:AbstractProcessDefinition,
+    MODEL<:AbstractModelDefinition,
+    PSDEF<:AbstractPhasespaceDefinition,
     IN_PARTICLES<:Tuple{Vararg{ParticleStateful}},
     OUT_PARTICLES<:Tuple{Vararg{ParticleStateful}},
-    ELEMENT<:QEDbase.AbstractFourMomentum,
-} <: QEDbase.AbstractPhaseSpacePoint{PROC,MODEL,PSDEF,IN_PARTICLES,OUT_PARTICLES}
+    ELEMENT<:AbstractFourMomentum,
+} <: AbstractPhaseSpacePoint{PROC,MODEL,PSDEF,IN_PARTICLES,OUT_PARTICLES}
     proc::PROC
     model::MODEL
     ps_def::PSDEF
@@ -132,9 +125,9 @@ struct PhaseSpacePoint{
 
     """
         PhaseSpacePoint(
-            proc::QEDbase.AbstractProcessDefinition, 
-            model::QEDbase.AbstractModelDefinition, 
-            ps_def::QEDbase.AbstractPhasespaceDefinition, 
+            proc::AbstractProcessDefinition, 
+            model::AbstractModelDefinition, 
+            ps_def::AbstractPhasespaceDefinition, 
             in_ps::Tuple{ParticleStateful},
             out_ps::Tuple{ParticleStateful},
         )
@@ -144,15 +137,15 @@ struct PhaseSpacePoint{
     function PhaseSpacePoint(
         proc::PROC, model::MODEL, ps_def::PSDEF, in_p::IN_PARTICLES, out_p::OUT_PARTICLES
     ) where {
-        PROC<:QEDbase.AbstractProcessDefinition,
-        MODEL<:QEDbase.AbstractModelDefinition,
-        PSDEF<:QEDbase.AbstractPhasespaceDefinition,
+        PROC<:AbstractProcessDefinition,
+        MODEL<:AbstractModelDefinition,
+        PSDEF<:AbstractPhasespaceDefinition,
         IN_PARTICLES<:Tuple{Vararg{ParticleStateful}},
         OUT_PARTICLES<:Tuple{Vararg{ParticleStateful}},
     }
         # this entire check is compiled away every time, so there's no need to disable it for performance ever
         ELEMENT = _check_psp(
-            QEDbase.incoming_particles(proc), QEDbase.outgoing_particles(proc), in_p, out_p
+            incoming_particles(proc), outgoing_particles(proc), in_p, out_p
         )
 
         return new{PROC,MODEL,PSDEF,IN_PARTICLES,OUT_PARTICLES,ELEMENT}(
@@ -164,7 +157,7 @@ end
 """
     InPhaseSpacePoint
 
-A partial type specialization on [`PhaseSpacePoint`](@ref) which can be used for dispatch in functions requiring only the in channel of the phase space to exist, for example implementations of `QEDbase._incident_flux`. No restrictions are imposed on the out-channel, which may or may not exist.
+A partial type specialization on [`PhaseSpacePoint`](@ref) which can be used for dispatch in functions requiring only the in channel of the phase space to exist, for example implementations of `_incident_flux`. No restrictions are imposed on the out-channel, which may or may not exist.
 
 See also: [`OutPhaseSpacePoint`](@ref)
 """
