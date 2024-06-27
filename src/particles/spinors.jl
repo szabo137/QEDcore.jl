@@ -1,5 +1,3 @@
-import Base.getindex
-
 const SPINOR_VALIDITY_CHECK = Ref(true)
 
 macro valid_spinor_input(ex)
@@ -118,6 +116,6 @@ end
 
 const SpinorVbar = IncomingAntiFermionSpinor
 
-function getindex(SP::T, idx) where {T<:AbstractParticleSpinor}
+function Base.getindex(SP::T, idx) where {T<:AbstractParticleSpinor}
     return idx in (1, 2) ? SP(idx) : throw(BoundsError())
 end

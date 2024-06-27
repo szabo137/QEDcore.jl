@@ -5,8 +5,6 @@
 # implement the abstact particle interface accordingly. 
 ###############
 
-import QEDbase: is_particle, is_anti_particle, is_boson, is_fermion, mass, charge
-
 """
     AbstractParticleSpinor
 
@@ -22,7 +20,7 @@ Abstract base types for particle species that act like fermions in the sense of 
 """
 abstract type FermionLike <: AbstractParticleType end
 
-is_fermion(::FermionLike) = true
+QEDbase.is_fermion(::FermionLike) = true
 
 """
 Abstract base type for fermions as distinct from [`AntiFermion`](@ref)s.
@@ -38,9 +36,9 @@ Abstract base type for fermions as distinct from [`AntiFermion`](@ref)s.
 """
 abstract type Fermion <: FermionLike end
 
-is_particle(::Fermion) = true
+QEDbase.is_particle(::Fermion) = true
 
-is_anti_particle(::Fermion) = false
+QEDbase.is_anti_particle(::Fermion) = false
 
 """
 Abstract base type for anti-fermions as distinct from its particle counterpart `Fermion`.
@@ -55,9 +53,9 @@ Abstract base type for anti-fermions as distinct from its particle counterpart `
 """
 abstract type AntiFermion <: FermionLike end
 
-is_particle(::AntiFermion) = false
+QEDbase.is_particle(::AntiFermion) = false
 
-is_anti_particle(::AntiFermion) = true
+QEDbase.is_anti_particle(::AntiFermion) = true
 
 """
 Abstract base type for majorana-fermions, i.e. fermions which are their own anti-particles.
@@ -73,9 +71,9 @@ Abstract base type for majorana-fermions, i.e. fermions which are their own anti
 """
 abstract type MajoranaFermion <: FermionLike end
 
-is_particle(::MajoranaFermion) = true
+QEDbase.is_particle(::MajoranaFermion) = true
 
-is_anti_particle(::MajoranaFermion) = true
+QEDbase.is_anti_particle(::MajoranaFermion) = true
 
 """
 Concrete type for *electrons* as a particle species. Mostly used for dispatch. 
@@ -96,8 +94,8 @@ electron
     ```
 """
 struct Electron <: Fermion end
-mass(::Electron) = 1.0
-charge(::Electron) = -1.0
+QEDbase.mass(::Electron) = 1.0
+QEDbase.charge(::Electron) = -1.0
 Base.show(io::IO, ::Electron) = print(io, "electron")
 
 """
@@ -119,8 +117,8 @@ positron
     ```
 """
 struct Positron <: AntiFermion end
-mass(::Positron) = 1.0
-charge(::Positron) = 1.0
+QEDbase.mass(::Positron) = 1.0
+QEDbase.charge(::Positron) = 1.0
 Base.show(io::IO, ::Positron) = print(io, "positron")
 
 """
@@ -131,7 +129,7 @@ Abstract base types for particle species that act like bosons in the sense of pa
 """
 abstract type BosonLike <: AbstractParticleType end
 
-is_boson(::BosonLike) = true
+QEDbase.is_boson(::BosonLike) = true
 
 """
 Abstract base type for bosons as distinct from its anti-particle counterpart [`AntiBoson`](@ref).
@@ -145,8 +143,8 @@ Abstract base type for bosons as distinct from its anti-particle counterpart [`A
     ```
 """
 abstract type Boson <: BosonLike end
-is_particle(::Boson) = true
-is_anti_particle(::Boson) = false
+QEDbase.is_particle(::Boson) = true
+QEDbase.is_anti_particle(::Boson) = false
 
 """
 Abstract base type for anti-bosons as distinct from its particle counterpart [`Boson`](@ref).
@@ -160,8 +158,8 @@ Abstract base type for anti-bosons as distinct from its particle counterpart [`B
     ```
 """
 abstract type AntiBoson <: BosonLike end
-is_particle(::AntiBoson) = false
-is_anti_particle(::AntiBoson) = true
+QEDbase.is_particle(::AntiBoson) = false
+QEDbase.is_anti_particle(::AntiBoson) = true
 
 """
 Abstract base type for majorana-bosons, i.e. bosons which are their own anti-particles.
@@ -175,8 +173,8 @@ Abstract base type for majorana-bosons, i.e. bosons which are their own anti-par
     ```
 """
 abstract type MajoranaBoson <: BosonLike end
-is_particle(::MajoranaBoson) = true
-is_anti_particle(::MajoranaBoson) = true
+QEDbase.is_particle(::MajoranaBoson) = true
+QEDbase.is_anti_particle(::MajoranaBoson) = true
 
 """
 Concrete type for the *photons* as a particle species. Mostly used for dispatch. 
@@ -197,6 +195,6 @@ photon
     ```
 """
 struct Photon <: MajoranaBoson end
-mass(::Photon) = 0.0
-charge(::Photon) = 0.0
+QEDbase.mass(::Photon) = 0.0
+QEDbase.charge(::Photon) = 0.0
 Base.show(io::IO, ::Photon) = print(io, "photon")

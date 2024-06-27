@@ -104,7 +104,7 @@ end
 Returns the element type of the [`PhaseSpacePoint`](@ref) object or type, e.g. `SFourMomentum`.
 
 TODO: Turn this back into a `jldoctest` once refactoring is done.
-```Julia
+```jldoctest
 julia> using QEDcore; using QEDprocesses
 
 julia> psp = PhaseSpacePoint(Compton(), PerturbativeQED(), PhasespaceDefinition(SphericalCoordinateSystem(), ElectronRestFrame()), Tuple(rand(SFourMomentum) for _ in 1:2), Tuple(rand(SFourMomentum) for _ in 1:2));

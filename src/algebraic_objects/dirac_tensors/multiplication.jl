@@ -4,6 +4,7 @@
 #
 #######
 
+# Base.*(...) = ... is not possible directly so we have to import here
 import Base: *
 
 """

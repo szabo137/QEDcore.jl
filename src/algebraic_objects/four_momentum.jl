@@ -4,19 +4,6 @@
 #
 #######
 
-import QEDbase:
-    getT,
-    getX,
-    getY,
-    getZ,
-    setT!,
-    setX!,
-    setY!,
-    setZ!,
-    IsLorentzVectorLike,
-    IsMutableLorentzVectorLike
-import StaticArrays: similar_type
-
 """
 $(TYPEDEF)
 
@@ -50,21 +37,25 @@ function SFourMomentum(t::T, x::T, y::T, z::T) where {T<:Union{Integer,Rational,
     return SFourMomentum(float(t), x, y, z)
 end
 
-function similar_type(::Type{A}, ::Type{T}, ::Size{S}) where {A<:SFourMomentum,T<:Real,S}
+function StaticArrays.similar_type(
+    ::Type{A}, ::Type{T}, ::Size{S}
+) where {A<:SFourMomentum,T<:Real,S}
     return SFourMomentum
 end
-function similar_type(::Type{A}, ::Type{T}, ::Size{S}) where {A<:SFourMomentum,T,S}
+function StaticArrays.similar_type(
+    ::Type{A}, ::Type{T}, ::Size{S}
+) where {A<:SFourMomentum,T,S}
     return SLorentzVector{T}
 end
 
-@inline getT(p::SFourMomentum) = p.E
-@inline getX(p::SFourMomentum) = p.px
-@inline getY(p::SFourMomentum) = p.py
-@inline getZ(p::SFourMomentum) = p.pz
+@inline QEDbase.getT(p::SFourMomentum) = p.E
+@inline QEDbase.getX(p::SFourMomentum) = p.px
+@inline QEDbase.getY(p::SFourMomentum) = p.py
+@inline QEDbase.getZ(p::SFourMomentum) = p.pz
 
 # TODO: this breaks incremental compilation because it's trying to eval permanent changes in a different module
 #register_LorentzVectorLike(SFourMomentum)
-@traitimpl IsLorentzVectorLike{SFourMomentum}
+@traitimpl QEDbase.IsLorentzVectorLike{SFourMomentum}
 
 #######
 #
@@ -104,35 +95,39 @@ function MFourMomentum(t::T, x::T, y::T, z::T) where {T<:Union{Integer,Rational,
     return MFourMomentum(float(t), x, y, z)
 end
 
-function similar_type(::Type{A}, ::Type{T}, ::Size{S}) where {A<:MFourMomentum,T<:Real,S}
+function StaticArrays.similar_type(
+    ::Type{A}, ::Type{T}, ::Size{S}
+) where {A<:MFourMomentum,T<:Real,S}
     return MFourMomentum
 end
-function similar_type(::Type{A}, ::Type{T}, ::Size{S}) where {A<:MFourMomentum,T,S}
+function StaticArrays.similar_type(
+    ::Type{A}, ::Type{T}, ::Size{S}
+) where {A<:MFourMomentum,T,S}
     return MLorentzVector{T}
 end
 
-@inline getT(p::MFourMomentum) = p.E
-@inline getX(p::MFourMomentum) = p.px
-@inline getY(p::MFourMomentum) = p.py
-@inline getZ(p::MFourMomentum) = p.pz
+@inline QEDbase.getT(p::MFourMomentum) = p.E
+@inline QEDbase.getX(p::MFourMomentum) = p.px
+@inline QEDbase.getY(p::MFourMomentum) = p.py
+@inline QEDbase.getZ(p::MFourMomentum) = p.pz
 
-function setT!(lv::MFourMomentum, value::Float64)
+function QEDbase.setT!(lv::MFourMomentum, value::Float64)
     return lv.E = value
 end
 
-function setX!(lv::MFourMomentum, value::Float64)
+function QEDbase.setX!(lv::MFourMomentum, value::Float64)
     return lv.px = value
 end
 
-function setY!(lv::MFourMomentum, value::Float64)
+function QEDbase.setY!(lv::MFourMomentum, value::Float64)
     return lv.py = value
 end
 
-function setZ!(lv::MFourMomentum, value::Float64)
+function QEDbase.setZ!(lv::MFourMomentum, value::Float64)
     return lv.pz = value
 end
 
 # TODO: this breaks incremental compilation because it's trying to eval permanent changes in a different module
 # register_LorentzVectorLike(MFourMomentum)
-@traitimpl IsLorentzVectorLike{MFourMomentum}
-@traitimpl IsMutableLorentzVectorLike{MFourMomentum}
+@traitimpl QEDbase.IsLorentzVectorLike{MFourMomentum}
+@traitimpl QEDbase.IsMutableLorentzVectorLike{MFourMomentum}

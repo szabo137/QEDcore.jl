@@ -4,9 +4,6 @@
 #
 #######
 
-import QEDbase: getT, getX, getY, getZ, setT!, setX!, setY!, setZ!
-import StaticArrays: similar_type
-
 #######
 #
 # Concrete LorentzVector types
@@ -35,18 +32,20 @@ struct SLorentzVector{T} <: AbstractLorentzVector{T}
 end
 SLorentzVector(t, x, y, z) = SLorentzVector(promote(t, x, y, z)...)
 
-function similar_type(::Type{A}, ::Type{T}, ::Size{S}) where {A<:SLorentzVector,T,S}
+function StaticArrays.similar_type(
+    ::Type{A}, ::Type{T}, ::Size{S}
+) where {A<:SLorentzVector,T,S}
     return SLorentzVector{T}
 end
 
-@inline getT(lv::SLorentzVector) = lv.t
-@inline getX(lv::SLorentzVector) = lv.x
-@inline getY(lv::SLorentzVector) = lv.y
-@inline getZ(lv::SLorentzVector) = lv.z
+@inline QEDbase.getT(lv::SLorentzVector) = lv.t
+@inline QEDbase.getX(lv::SLorentzVector) = lv.x
+@inline QEDbase.getY(lv::SLorentzVector) = lv.y
+@inline QEDbase.getZ(lv::SLorentzVector) = lv.z
 
 # TODO: this breaks incremental compilation because it's trying to eval permanent changes in a different module
 #register_LorentzVectorLike(SLorentzVector)
-@traitimpl IsLorentzVectorLike{SLorentzVector}
+@traitimpl QEDbase.IsLorentzVectorLike{SLorentzVector}
 
 """
 $(TYPEDEF)
@@ -71,32 +70,34 @@ mutable struct MLorentzVector{T} <: AbstractLorentzVector{T}
 end
 MLorentzVector(t, x, y, z) = MLorentzVector(promote(t, x, y, z)...)
 
-function similar_type(::Type{A}, ::Type{T}, ::Size{S}) where {A<:MLorentzVector,T,S}
+function StaticArrays.similar_type(
+    ::Type{A}, ::Type{T}, ::Size{S}
+) where {A<:MLorentzVector,T,S}
     return MLorentzVector{T}
 end
 
-@inline getT(lv::MLorentzVector) = lv.t
-@inline getX(lv::MLorentzVector) = lv.x
-@inline getY(lv::MLorentzVector) = lv.y
-@inline getZ(lv::MLorentzVector) = lv.z
+@inline QEDbase.getT(lv::MLorentzVector) = lv.t
+@inline QEDbase.getX(lv::MLorentzVector) = lv.x
+@inline QEDbase.getY(lv::MLorentzVector) = lv.y
+@inline QEDbase.getZ(lv::MLorentzVector) = lv.z
 
-function setT!(lv::MLorentzVector, value::T) where {T}
+function QEDbase.setT!(lv::MLorentzVector, value::T) where {T}
     return lv.t = value
 end
 
-function setX!(lv::MLorentzVector, value::T) where {T}
+function QEDbase.setX!(lv::MLorentzVector, value::T) where {T}
     return lv.x = value
 end
 
-function setY!(lv::MLorentzVector, value::T) where {T}
+function QEDbase.setY!(lv::MLorentzVector, value::T) where {T}
     return lv.y = value
 end
 
-function setZ!(lv::MLorentzVector, value::T) where {T}
+function QEDbase.setZ!(lv::MLorentzVector, value::T) where {T}
     return lv.z = value
 end
 
 # TODO: this breaks incremental compilation because it's trying to eval permanent changes in a different module
 #register_LorentzVectorLike(MLorentzVector)
-@traitimpl IsLorentzVectorLike{MLorentzVector}
-@traitimpl IsMutableLorentzVectorLike{MLorentzVector}
+@traitimpl QEDbase.IsLorentzVectorLike{MLorentzVector}
+@traitimpl QEDbase.IsMutableLorentzVectorLike{MLorentzVector}
