@@ -40,7 +40,6 @@ Representation of a particle with a state. It has four fields:
 
 Overloads for `is_fermion`, `is_boson`, `is_particle`, `is_anti_particle`, `is_incoming`, `is_outgoing`, `mass`, and `charge` are provided, delegating the call to the correct field and thus implementing the `AbstractParticle` interface.
 
-TODO: Turn this back into a `jldoctest` once refactoring is done.
 ```jldoctest
 julia> using QEDcore; using QEDbase
 
@@ -76,7 +75,6 @@ Representation of a point in the phase space of a process. Contains the process 
 
 The legality of the combination of the given process and the incoming and outgoing particles is checked on construction. If the numbers of particles mismatch, the types of particles mismatch (note that order is important), or incoming particles have an `Outgoing` direction, an error is thrown.
 
-TODO: Turn this back into a `jldoctest` once refactoring is done.
 ```jldoctest
 julia> using QEDcore; using QEDbase; using QEDprocesses
 
