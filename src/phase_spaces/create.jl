@@ -1,5 +1,22 @@
-# PSP constructors from particle statefuls
+"""
+    ParticleStateful{DIR, SPECIES}(mom::AbstractFourMomentum)
+    ParticleStateful{DIR, SPECIES, EL}(mom::EL)
 
+Construct a [`ParticleStateful`](@ref) from the given momentum on a fully or partially specified type.
+"""
+@inline function ParticleStateful{DIR,SPECIES}(
+    mom::AbstractFourMomentum
+) where {DIR<:ParticleDirection,SPECIES<:AbstractParticleType}
+    return ParticleStateful(DIR(), SPECIES(), mom)
+end
+
+@inline function ParticleStateful{DIR,SPECIES,EL}(
+    mom::EL
+) where {DIR<:ParticleDirection,SPECIES<:AbstractParticleType,EL<:AbstractFourMomentum}
+    return ParticleStateful(DIR(), SPECIES(), mom)
+end
+
+# PSP constructors from particle statefuls
 """
     InPhaseSpacePoint(
         proc::AbstractProcessDefinition, 

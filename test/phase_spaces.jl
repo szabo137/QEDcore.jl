@@ -23,6 +23,9 @@ end
         mom = rand(RNG, SFourMomentum)
 
         particle_stateful = ParticleStateful(dir, species, mom)
+        @test particle_stateful == ParticleStateful{typeof(dir),typeof(species)}(mom)
+        @test particle_stateful ==
+            ParticleStateful{typeof(dir),typeof(species),typeof(mom)}(mom)
 
         # particle interface
         @test is_fermion(particle_stateful) == is_fermion(species)
