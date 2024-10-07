@@ -106,8 +106,7 @@ test_broadcast(x::AbstractSpinOrPolarization) = x
             for s1 in (1, 2)
                 for s2 in (1, 2)
                     @test isapprox(
-                        SFourMomentum(Ubar[s1] * (GAMMA * U[s2])) * (s1 == s2),
-                        2 * P * (s1 == s2),
+                        SFourMomentum(Ubar[s1] * (GAMMA * U[s2])), 2 * P * (s1 == s2)
                     )
                 end
             end
