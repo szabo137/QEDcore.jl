@@ -58,7 +58,7 @@ test_broadcast(x::AbstractSpinOrPolarization) = x
         V = base_state(Positron(), Outgoing(), P, AllSpin())
         Vbar = base_state(Positron(), Incoming(), P, AllSpin())
 
-        @testset "normatlisation" begin
+        @testset "normalization" begin
             for s1 in (1, 2)
                 for s2 in (1, 2)
                     @test isapprox(Ubar[s1] * U[s2], 2 * m * (s1 == s2))
