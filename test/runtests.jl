@@ -33,10 +33,6 @@ begin
         include("particles/states.jl")
     end
 
-    @time @safetestset "particle spinors" begin
-        include("particles/spinors.jl")
-    end
-
     @time @safetestset "particle base states" begin
         include("particles/states.jl")
     end

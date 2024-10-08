@@ -13,17 +13,9 @@ export BiSpinor, AdjointBiSpinor, DiracMatrix
 export gamma, GAMMA, DiracGammaRepresentation, slashed
 
 # particle types
-export AbstractParticleSpinor
 export FermionLike, Fermion, AntiFermion, MajoranaFermion
 export BosonLike, Boson, AntiBoson, MajoranaBoson
 export Electron, Positron, Photon
-
-# particle spinors
-export BASE_PARTICLE_SPINOR, BASE_ANTIPARTICLE_SPINOR
-export IncomingFermionSpinor,
-    OutgoingFermionSpinor, IncomingAntiFermionSpinor, OutgoingAntiFermionSpinor
-export SpinorU, SpinorUbar, SpinorV, SpinorVbar
-export @valid_spinor_input
 
 # particle base states
 export base_state
@@ -58,6 +50,5 @@ include("algebraic_objects/gamma_matrices.jl")
 include("particles/particle_types.jl")
 include("particles/propagators.jl")
 include("particles/states.jl")
-include("particles/spinors.jl")
 
 end
