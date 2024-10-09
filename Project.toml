@@ -19,7 +19,7 @@ QEDbase = "0.2.2"
 Reexport = "^1.2"
 SimpleTraits = "^0.9"
 StaticArrays = "^1.9"
-julia = "1.6"
+julia = "1.10"
 
 [extras]
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
@@ -29,10 +29,4 @@ SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = [
-    "Random",
-    "LinearAlgebra",
-    "SafeTestsets",
-    "Test",
-    "SparseArrays",
-]
+test = ["Random", "LinearAlgebra", "SafeTestsets", "Test", "SparseArrays"]
