@@ -96,14 +96,6 @@ when calculating or sampling phase space points in scattering processes.
 function in_phase_space_layout end
 
 """
-
-    _build_momenta(proc,model,in_psl, in_coords)
-    _build_momenta(proc,model,Ptot,out_psl,out_coords)
-
-TBW
-"""
-
-"""
     _build_momenta(proc, model, in_psl::AbstractInPhaseSpaceLayout, in_coords::Tuple)
     _build_momenta(proc, model, Ptot::AbstractFourMomentum, out_psl::AbstractOutPhaseSpaceLayout, out_coords::Tuple)
 
