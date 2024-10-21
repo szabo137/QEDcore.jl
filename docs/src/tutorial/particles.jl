@@ -33,7 +33,7 @@ using QEDprocesses
 @assert !is_anti_particle(Electron())
 @assert !is_fermion(Photon())
 
-# These functions are part of QEDbase.jl's (TODO: enable link once QEDbase docs are up)`[particle interface](@extref QEDbase particles)`.
+# These functions are part of QEDbase.jl's [particle interface](@extref QEDbase Particle-Interface).
 
 # ## ParticleStateful
 

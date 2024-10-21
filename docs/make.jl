@@ -53,16 +53,19 @@ tutorial_output_dir_name = splitpath(tutorial_output_dir)[end]
 
 pages = [
     "Home" => "index.md",
-    "Phase Space Definitions" => joinpath(tutorial_output_dir_name, "ps_def.md"),
-    "Particles and Phase Space Points" =>
-        joinpath(tutorial_output_dir_name, "particles.md"),
-    "Matrix and Vector Types" => joinpath(tutorial_output_dir_name, "vectors.md"),
+    "Tutorials" => [
+        "Phase Space Definitions" => joinpath(tutorial_output_dir_name, "ps_def.md"),
+        "Particles and Phase Space Points" =>
+            joinpath(tutorial_output_dir_name, "particles.md"),
+        "Matrix and Vector Types" => joinpath(tutorial_output_dir_name, "vectors.md"),
+    ],
     "API reference" => [
         "Contents" => "library/outline.md",
         "Particles" => "library/particles.md",
         "Phase Space Definition" => "library/phasespacedef.md",
         "Phase Space Points" => "library/phasespacepoint.md",
         "Vector Types" => "library/vectors.md",
+        "Lorentz Boosts" => "library/lorentzboosts.md",
         "Index" => "library/index.md",
     ],
 ]
