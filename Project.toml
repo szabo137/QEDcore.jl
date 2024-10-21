@@ -1,10 +1,6 @@
 name = "QEDcore"
 uuid = "35dc0263-cb5f-4c33-a114-1d7f54ab753e"
-<<<<<<< HEAD
 authors = ["Uwe Hernandez Acosta <u.hernandez@hzdr.de>", "Anton Reinhard"]
-=======
-authors = ["Uwe Hernandez Acosta <u.hernandez@hzdr.de>", "Anton Reinhard <a.reinhard@hzdr.de>"]
->>>>>>> 8c8795a (added psl interface, coordiante maps, coordinate maps with cache)
 version = "0.1.1"
 
 [deps]
