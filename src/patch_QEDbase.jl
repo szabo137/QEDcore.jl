@@ -2,10 +2,12 @@
 # Interface: Phase space layout
 #############
 
+abstract type AbstractPerturbativeModel <: AbstractModelDefinition end
+
 export AbstractPhaseSpaceLayout
 export AbstractInPhaseSpaceLayout
 export AbstractOutPhaseSpaceLayout
-export build_momenta
+export build_momenta, phase_space_dimension, in_phase_space_layout
 
 """
     AbstractPhaseSpaceLayout
